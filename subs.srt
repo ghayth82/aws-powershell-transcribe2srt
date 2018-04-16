@@ -1,0 +1,3925 @@
+
+    1
+    00:00:00,050 --> 00:00:02,850
+    Hello and welcome to this lesson and this
+    
+    2
+    00:00:02,850 --> 00:00:05,050
+    lesson we're going to build on application
+    
+    3
+    00:00:05,230 --> 00:00:07,650
+    inside of a virtual private cloud using
+    
+    4
+    00:00:07,650 --> 00:00:09,490
+    everything that we've learned up to this
+    
+    5
+    00:00:09,490 --> 00:00:11,900
+    point, so this application will make use
+    
+    6
+    00:00:11,900 --> 00:00:14,920
+    of auto scaling and elastic loaf balancer
+    
+    7
+    00:00:15,090 --> 00:00:19,210
+    amazon rgs a la ravel application and all
+    
+    8
+    00:00:19,210 --> 00:00:21,360
+    of this will be inside of a virtual private
+    
+    9
+    00:00:21,360 --> 00:00:23,590
+    cloud, so let's get started. First of all
+    
+    10
+    00:00:00,000 --> 00:00:25,650
+    , i mean my amazon dashboard and i'm going
+    
+    11
+    00:00:25,650 --> 00:00:28,290
+    to go down to networking in the vpc dashboard
+    
+    12
+    00:00:28,290 --> 00:00:31,230
+    section an inside of this v p c section we're
+    
+    13
+    00:00:31,230 --> 00:00:34,870
+    going to build an entirely new v p c from scratch
+    
+    14
+    00:00:35,030 --> 00:00:36,790
+    now we've done this before, so i'm not going
+    
+    15
+    00:00:36,790 --> 00:00:39,180
+    to take as much time toe walk through every
+    
+    16
+    00:00:39,180 --> 00:00:41,780
+    single step, but i do want to go over it one
+    
+    17
+    00:00:41,780 --> 00:00:43,580
+    more time just to make sure that you understand
+    
+    18
+    00:00:43,740 --> 00:00:45,930
+    every single step of the way. So when i'm
+    
+    19
+    00:00:45,930 --> 00:00:48,900
+    creating this v p c, i'm going to name it application
+    
+    20
+    00:00:49,320 --> 00:00:52,330
+    inside of the c i d or block i'm going to give
+    
+    21
+    00:00:52,330 --> 00:00:56,720
+    it a range of ten dot zero dot zero slash sixteen
+    
+    22
+    00:00:56,890 --> 00:00:59,530
+    so that we have plenty of i p addresses and
+    
+    23
+    00:00:59,530 --> 00:01:01,800
+    then i'm going to leave the default tendency
+    
+    24
+    00:01:03,210 --> 00:01:06,010
+    from here we know that we need to set up some
+    
+    25
+    00:01:06,010 --> 00:01:08,520
+    sub nets and will want to make public and
+    
+    26
+    00:01:08,520 --> 00:01:10,590
+    private sub nets because we'll have a load
+    
+    27
+    00:01:10,590 --> 00:01:13,770
+    balancer web servers and a database the
+    
+    28
+    00:01:13,770 --> 00:01:16,100
+    web servers and database are going to be
+    
+    29
+    00:01:16,100 --> 00:01:19,050
+    in private sub nets but what if we still need
+    
+    30
+    00:01:19,050 --> 00:00:00,000
+    to get access to those instances? Well,
+    
+    31
+    00:01:21,390 --> 00:01:24,190
+    we need to have an instance or multiple instances
+    
+    32
+    00:01:24,320 --> 00:01:26,350
+    on our public sub net so we got to make sure
+    
+    33
+    00:01:26,350 --> 00:01:28,250
+    that we do have a public servant and this
+    
+    34
+    00:01:28,250 --> 00:01:31,110
+    example that would help us out and by having
+    
+    35
+    00:01:31,110 --> 00:01:34,110
+    both the web servers and database inside
+    
+    36
+    00:01:34,110 --> 00:01:36,560
+    of the private sub net we can add additional
+    
+    37
+    00:01:36,560 --> 00:01:38,850
+    levels of security on top of that we want
+    
+    38
+    00:01:38,850 --> 00:01:42,620
+    to enable multi ese or multi availability
+    
+    39
+    00:01:42,630 --> 00:01:45,980
+    zone deployment for our database so we will
+    
+    40
+    00:01:45,980 --> 00:01:48,370
+    need at least two private suddenness so
+    
+    41
+    00:01:48,370 --> 00:01:49,790
+    let's head over here and let's go ahead and
+    
+    42
+    00:01:49,790 --> 00:01:52,400
+    create the first sub net and this first summit
+    
+    43
+    00:01:52,410 --> 00:01:56,200
+    i'm going to name it app public tenn dot zero
+    
+    44
+    00:01:56,200 --> 00:02:01,150
+    dot zero dot zero i'm going to copy this and
+    
+    45
+    00:02:01,150 --> 00:02:02,660
+    then i'm gonna make sure it's in the right
+    
+    46
+    00:02:02,660 --> 00:02:05,630
+    v p c which is the one we just created and then
+    
+    47
+    00:02:05,630 --> 00:02:07,800
+    for the availability zone just is going
+    
+    48
+    00:02:07,800 --> 00:02:12,130
+    to select to a us west to a and here i'm going
+    
+    49
+    00:02:12,130 --> 00:02:15,520
+    to pace this and he raised the front and then
+    
+    50
+    00:02:15,520 --> 00:02:18,930
+    just do slash twenty four ok so this has to
+    
+    51
+    00:02:18,930 --> 00:02:23,060
+    be the same as our v p c range which was ten
+    
+    52
+    00:02:23,060 --> 00:02:26,160
+    dot zero dot zero zero and then weaken increments
+    
+    53
+    00:02:26,470 --> 00:02:28,310
+    for the different sub nets so this is going
+    
+    54
+    00:02:28,310 --> 00:00:00,000
+    to be the first public sub net now let's,
+    
+    55
+    00:02:30,480 --> 00:02:32,940
+    make a private sub net and we're going to
+    
+    56
+    00:02:32,940 --> 00:02:36,000
+    incriminate this by one so ten dot zero dot
+    
+    57
+    00:02:36,000 --> 00:02:39,350
+    one dot zero again in the application bpc
+    
+    58
+    00:02:39,800 --> 00:02:43,360
+    and in us west to a as well, since this is a
+    
+    59
+    00:02:43,360 --> 00:02:46,080
+    private different than the public and then
+    
+    60
+    00:02:46,080 --> 00:02:48,660
+    we're going toe paste this in here slash
+    
+    61
+    00:02:48,670 --> 00:02:52,670
+    twenty four create this and finally we're
+    
+    62
+    00:02:52,670 --> 00:02:55,620
+    going to make the third sub net, which is
+    
+    63
+    00:02:55,620 --> 00:02:58,560
+    also going to be private this time is going
+    
+    64
+    00:02:58,560 --> 00:03:02,450
+    to be two dot zero and in the application
+    
+    65
+    00:03:02,450 --> 00:03:05,380
+    vpc, but this time is going to be in the two
+    
+    66
+    00:03:05,380 --> 00:03:09,400
+    b zone slash twenty four okay, so that takes
+    
+    67
+    00:03:09,400 --> 00:03:12,210
+    care of all three sub nets and we're going
+    
+    68
+    00:03:12,210 --> 00:03:14,120
+    to end up again with two private sub nets
+    
+    69
+    00:03:14,120 --> 00:03:17,160
+    in one public sub net. But as it stands, all
+    
+    70
+    00:03:17,160 --> 00:03:19,860
+    three sub nets are private because we don't
+    
+    71
+    00:03:19,860 --> 00:03:22,530
+    have an internet gateway attached to our
+    
+    72
+    00:03:22,530 --> 00:03:24,440
+    public submit, so we need to take care of
+    
+    73
+    00:03:24,440 --> 00:03:27,010
+    that so let's head over to our round tables
+    
+    74
+    00:03:27,790 --> 00:03:30,210
+    and we're going to create a new route table
+    
+    75
+    00:00:00,000 --> 00:03:35,250
+    . I'm going to name this app public and in
+    
+    76
+    00:03:35,250 --> 00:00:00,000
+    the application pepsi and create this.
+    
+    77
+    00:03:37,740 --> 00:03:39,620
+    This is the round table that's going toe
+    
+    78
+    00:00:00,000 --> 00:03:43,590
+    . Route from our internet gateway to our
+    
+    79
+    00:03:43,590 --> 00:03:45,650
+    public submit or the sub net that we want
+    
+    80
+    00:03:45,650 --> 00:03:49,450
+    to be public so now we can go to internet gateways
+    
+    81
+    00:03:49,570 --> 00:03:52,000
+    and we can create a new one going to call this
+    
+    82
+    00:03:52,000 --> 00:03:56,580
+    one app then i can attach it to a v p c she's
+    
+    83
+    00:03:56,580 --> 00:03:58,640
+    our application of the pc and the only choice
+    
+    84
+    00:03:59,120 --> 00:04:01,220
+    then i want to go back up to now round table
+    
+    85
+    00:04:02,010 --> 00:04:04,800
+    i have the right route selected i can click
+    
+    86
+    00:04:04,800 --> 00:04:07,690
+    on routes edit and we're going to set the
+    
+    87
+    00:04:07,690 --> 00:04:10,810
+    destination of zero dot zero dot zero dot
+    
+    88
+    00:04:10,810 --> 00:04:14,460
+    zero slash zero so it's open to all destinations
+    
+    89
+    00:04:14,470 --> 00:04:16,440
+    which is the open internet and then i'm going
+    
+    90
+    00:04:16,440 --> 00:04:18,820
+    to select the ap internet gateway that we
+    
+    91
+    00:04:18,820 --> 00:04:22,540
+    just created and i want to hit save now i want
+    
+    92
+    00:04:22,540 --> 00:04:24,180
+    to make sure it's associated to the right
+    
+    93
+    00:04:24,180 --> 00:04:28,260
+    sub net which is the public one which is why
+    
+    94
+    00:04:28,260 --> 00:04:30,130
+    i named it that way it makes it very easy to
+    
+    95
+    00:04:30,130 --> 00:04:33,220
+    differentiate and we can also verify the
+    
+    96
+    00:04:33,380 --> 00:04:36,730
+    i p address range let's hit save so now we
+    
+    97
+    00:04:36,730 --> 00:04:38,650
+    have an internet gateway attached to our
+    
+    98
+    00:04:38,650 --> 00:04:41,410
+    route and that route is attached to the sub
+    
+    99
+    00:04:41,410 --> 00:04:43,410
+    net that we want to make public so we have
+    
+    100
+    00:04:43,410 --> 00:04:45,550
+    a public submit now that we have everything
+    
+    101
+    00:04:45,550 --> 00:04:48,850
+    created it's timeto launch one of our instances
+    
+    102
+    00:04:49,150 --> 00:04:52,630
+    and let's actually start with rt s so i'm
+    
+    103
+    00:04:52,630 --> 00:04:55,590
+    going to go back to the main dashboard and
+    
+    104
+    00:04:55,590 --> 00:04:59,220
+    click on our d s inside of our d s the first
+    
+    105
+    00:04:59,220 --> 00:05:01,750
+    thing we're going to do is create a sub net
+    
+    106
+    00:05:01,750 --> 00:05:04,830
+    group, so let's create this subject group
+    
+    107
+    00:05:04,840 --> 00:05:06,740
+    and we're going to name this subject group
+    
+    108
+    00:05:07,210 --> 00:05:10,310
+    application aren't yes, that can copy this
+    
+    109
+    00:05:10,310 --> 00:05:12,600
+    and put it as the description, then we're
+    
+    110
+    00:05:12,600 --> 00:05:15,540
+    going to select the vpc that we want, and
+    
+    111
+    00:05:15,540 --> 00:05:17,170
+    then what we're going to do is we're going
+    
+    112
+    00:05:17,170 --> 00:05:21,390
+    to select a kn availability zone with a sub
+    
+    113
+    00:05:21,390 --> 00:05:24,120
+    net i d that we want to add one of our instances
+    
+    114
+    00:05:24,120 --> 00:05:27,210
+    inside of it. Now again, our rgs instance
+    
+    115
+    00:05:27,210 --> 00:05:30,120
+    needs to be in private sub nets, so i created
+    
+    116
+    00:05:30,120 --> 00:05:33,090
+    a private sub net and to a availability zone
+    
+    117
+    00:05:33,180 --> 00:05:36,420
+    and to be the private submit is the ten dot
+    
+    118
+    00:05:36,420 --> 00:05:39,010
+    zero dot one zero this one is public, which
+    
+    119
+    00:05:39,010 --> 00:05:41,780
+    is not the one we want, but it is in availabilities
+    
+    120
+    00:05:41,780 --> 00:05:44,450
+    onto a, which is why it's an option here to
+    
+    121
+    00:05:44,450 --> 00:05:47,940
+    select this one, the private one at it, and
+    
+    122
+    00:05:47,940 --> 00:05:51,330
+    then we're gonna change to to be and select
+    
+    123
+    00:05:51,340 --> 00:05:53,610
+    the only subject available because this
+    
+    124
+    00:05:53,610 --> 00:05:55,690
+    is a private sub net and we're going to add
+    
+    125
+    00:05:55,690 --> 00:05:58,470
+    this one as well and then we can hit create
+    
+    126
+    00:05:59,340 --> 00:06:01,828
+    so we're creating a sub knit group that we're
+    
+    127
+    00:06:01,828 --> 00:06:05,028
+    going to be able to use for our d s to be ableto
+    
+    128
+    00:06:05,088 --> 00:06:07,578
+    distribute our database across multiple
+    
+    129
+    00:06:07,578 --> 00:06:09,838
+    availability zones, which increases our
+    
+    130
+    00:06:09,838 --> 00:06:12,058
+    availability and fault tolerance and his
+    
+    131
+    00:06:12,058 --> 00:06:14,448
+    good practice so now that we have that done
+    
+    132
+    00:00:00,000 --> 00:06:17,628
+    , we can go to instances and we can launch
+    
+    133
+    00:06:17,638 --> 00:06:20,488
+    a database instance for this database instance
+    
+    134
+    00:00:00,000 --> 00:06:23,188
+    , we're going to use my sequel, and i'm going
+    
+    135
+    00:06:23,188 --> 00:06:25,448
+    to select this one right here, which uses
+    
+    136
+    00:06:25,448 --> 00:06:28,318
+    multi easy deployment and that's exactly
+    
+    137
+    00:06:28,318 --> 00:06:30,828
+    what we want now, inside of here, i'm just
+    
+    138
+    00:06:30,828 --> 00:06:32,928
+    going to choose one of the smallest possible
+    
+    139
+    00:06:32,928 --> 00:06:35,298
+    ones just to save money because this is just
+    
+    140
+    00:06:35,298 --> 00:06:37,378
+    a lesson, but you may need something bigger
+    
+    141
+    00:00:00,000 --> 00:06:39,678
+    , so keep that in mind as you're needs may
+    
+    142
+    00:06:39,678 --> 00:06:41,698
+    grow in the future if you're actually doing
+    
+    143
+    00:06:41,698 --> 00:06:43,638
+    this for a production environment. So here
+    
+    144
+    00:06:43,638 --> 00:06:46,118
+    in this option, i can select between yes
+    
+    145
+    00:06:46,118 --> 00:06:48,538
+    and no for multi availability zone deployment
+    
+    146
+    00:00:00,000 --> 00:06:51,348
+    . Of course we want yes, then i'm just going
+    
+    147
+    00:06:51,348 --> 00:06:54,468
+    to select general purpose as his d with five
+    
+    148
+    00:06:54,468 --> 00:06:56,948
+    gigabytes, which is plenty for me for this
+    
+    149
+    00:06:56,948 --> 00:06:58,868
+    lesson and the database instance i didn't
+    
+    150
+    00:06:58,868 --> 00:07:03,238
+    fire, i'm going to use ap hyphen d b for the
+    
+    151
+    00:07:03,238 --> 00:07:05,968
+    master user name i'm going to use! Ap underscore
+    
+    152
+    00:07:05,968 --> 00:07:08,708
+    d b for the master password i'm going to do
+    
+    153
+    00:00:00,000 --> 00:07:12,948
+    , ap underscored the ap underscore d b because
+    
+    154
+    00:07:12,948 --> 00:07:17,468
+    it needs to be at least a character's okay
+    
+    155
+    00:00:00,000 --> 00:07:19,478
+    , so now we're in the network security tab
+    
+    156
+    00:07:19,638 --> 00:07:22,378
+    we're going to make sure we choose our application
+    
+    157
+    00:07:22,568 --> 00:07:25,858
+    vpc not the default vpc this is the one we
+    
+    158
+    00:07:25,858 --> 00:07:28,798
+    built for this then we can choose the subject
+    
+    159
+    00:07:28,798 --> 00:07:30,938
+    group we only have one in this case this is
+    
+    160
+    00:07:30,938 --> 00:07:33,318
+    the one we just created that's associated
+    
+    161
+    00:07:33,318 --> 00:07:35,818
+    with this v p c which is why popped up we do
+    
+    162
+    00:07:35,818 --> 00:07:37,858
+    not want to make this publicly accessible
+    
+    163
+    00:07:37,958 --> 00:07:40,488
+    we cannot choose the velvety zone preference
+    
+    164
+    00:07:40,488 --> 00:07:42,738
+    it does it for us and hear what i'm going to
+    
+    165
+    00:07:42,738 --> 00:07:45,438
+    do is i'm going to create a new security group
+    
+    166
+    00:07:45,748 --> 00:07:48,308
+    because we're going to want to customize
+    
+    167
+    00:07:48,318 --> 00:07:50,558
+    what are security group is going to allow
+    
+    168
+    00:07:50,638 --> 00:07:52,828
+    and when it's going to block so for this leave
+    
+    169
+    00:07:52,828 --> 00:07:55,778
+    this elected for database name i'm going
+    
+    170
+    00:07:55,778 --> 00:07:59,718
+    to use ap deby and i'm going to leave the same
+    
+    171
+    00:07:59,718 --> 00:08:02,902
+    database ports group options all of this
+    
+    172
+    00:08:02,902 --> 00:08:07,222
+    is going to be the same and i am going to disable
+    
+    173
+    00:08:07,222 --> 00:08:09,552
+    monitoring but everything else is going
+    
+    174
+    00:08:09,552 --> 00:08:11,642
+    to stay the same actually i have to have an
+    
+    175
+    00:08:11,652 --> 00:08:13,622
+    underscore here instead of a hyphen for
+    
+    176
+    00:08:13,662 --> 00:08:17,222
+    naming purposes and then we can launch the
+    
+    177
+    00:08:17,222 --> 00:08:23,652
+    database instance okay, so now this is creating
+    
+    178
+    00:08:23,652 --> 00:08:26,642
+    and once it's created we can get more information
+    
+    179
+    00:08:26,842 --> 00:08:29,612
+    so we'll come back to our d s in just a moment
+    
+    180
+    00:00:00,000 --> 00:08:31,832
+    . But while this is creating let's, go ahead
+    
+    181
+    00:08:31,832 --> 00:08:34,082
+    and launch an easy to instance so let's go
+    
+    182
+    00:08:34,082 --> 00:08:36,702
+    back to easy to and we're going to create
+    
+    183
+    00:08:36,702 --> 00:08:39,222
+    this instance to create a web server with
+    
+    184
+    00:08:39,222 --> 00:08:41,832
+    our php larry bell application we're going
+    
+    185
+    00:08:41,832 --> 00:08:43,832
+    to configure everything to work with our
+    
+    186
+    00:08:43,832 --> 00:08:45,832
+    database and everything else then we're
+    
+    187
+    00:08:45,832 --> 00:08:47,682
+    going toe bacon image we're going to create
+    
+    188
+    00:08:47,682 --> 00:08:50,372
+    an image out of our instance so that we can
+    
+    189
+    00:08:50,372 --> 00:08:53,212
+    launch it in private sub nets using auto
+    
+    190
+    00:08:53,212 --> 00:08:55,882
+    scaling so it's all automated but we do have
+    
+    191
+    00:08:55,882 --> 00:08:57,572
+    to create an image because we don't have
+    
+    192
+    00:08:57,572 --> 00:09:00,372
+    one to our specifications just yet since
+    
+    193
+    00:09:00,372 --> 00:09:02,862
+    we can't access any instances in a private
+    
+    194
+    00:09:02,862 --> 00:09:05,162
+    sub net unless we set something else like
+    
+    195
+    00:09:05,282 --> 00:09:09,002
+    a vpn up we are going to create a public instance
+    
+    196
+    00:09:09,002 --> 00:09:11,752
+    and said and connect to that configure everything
+    
+    197
+    00:09:11,752 --> 00:09:13,812
+    to make an image and deployed that to private
+    
+    198
+    00:09:13,812 --> 00:09:16,252
+    sub nets and private instances ok, so let's
+    
+    199
+    00:09:16,262 --> 00:09:19,152
+    launch an instance i'm going to choose who
+    
+    200
+    00:09:19,152 --> 00:09:23,182
+    bun too for this sixty four bit thu dot micro
+    
+    201
+    00:09:23,182 --> 00:09:25,542
+    configure instance details here of course
+    
+    202
+    00:09:25,542 --> 00:09:27,712
+    we want to launch it in our application vpc
+    
+    203
+    00:09:28,402 --> 00:09:30,352
+    the subject is going to be the public one
+    
+    204
+    00:09:30,522 --> 00:09:32,312
+    so make sure you see like that if you're following
+    
+    205
+    00:09:32,312 --> 00:09:34,862
+    along and i'm not going to change anything
+    
+    206
+    00:09:34,862 --> 00:09:38,122
+    else going to keep the same storage web server
+    
+    207
+    00:09:38,562 --> 00:09:41,662
+    image so i know which one it is ok now and the
+    
+    208
+    00:09:41,662 --> 00:09:44,212
+    security groups i'm going to modify a few
+    
+    209
+    00:09:44,212 --> 00:09:47,312
+    things because if you remember this instance
+    
+    210
+    00:09:47,322 --> 00:09:50,042
+    isn't actually going to be used in production
+    
+    211
+    00:09:50,212 --> 00:09:52,252
+    and this instance is going to be moved to
+    
+    212
+    00:09:52,252 --> 00:09:54,722
+    private instances but i still need to be
+    
+    213
+    00:09:54,722 --> 00:09:58,652
+    able to access it for now using ss h and i also
+    
+    214
+    00:09:58,652 --> 00:10:01,032
+    want to make sure that our php application
+    
+    215
+    00:10:01,032 --> 00:10:03,142
+    is going to do it's way properly so i want
+    
+    216
+    00:10:03,142 --> 00:10:07,512
+    to make it possible for users to go via http
+    
+    217
+    00:10:07,522 --> 00:10:09,962
+    and pull up the page itself. Now i'm going
+    
+    218
+    00:10:09,962 --> 00:10:13,042
+    to change the security group name to ap p
+    
+    219
+    00:10:13,042 --> 00:10:17,482
+    c to security group i'm going to copy that
+    
+    220
+    00:10:17,482 --> 00:10:19,352
+    and paste it for the description as well
+    
+    221
+    00:00:00,000 --> 00:10:21,702
+    . I have both of my rules the way i want them
+    
+    222
+    00:00:00,000 --> 00:10:25,902
+    , and i can click on review and launch. I'm
+    
+    223
+    00:10:25,902 --> 00:10:27,582
+    going to use an existing keep hair that i
+    
+    224
+    00:10:27,592 --> 00:10:29,632
+    already have. You may want to create a new
+    
+    225
+    00:10:29,632 --> 00:10:31,552
+    one if you don't already have one or if you
+    
+    226
+    00:10:31,552 --> 00:10:33,172
+    want to use a different one and then we're
+    
+    227
+    00:10:33,172 --> 00:10:35,342
+    going to launch the instance itself. Let's
+    
+    228
+    00:00:00,000 --> 00:10:37,682
+    , go back to instances and we'll see this
+    
+    229
+    00:10:37,682 --> 00:10:40,102
+    one initializing actually let me filter
+    
+    230
+    00:10:40,102 --> 00:10:43,562
+    out for only running instances, as well
+    
+    231
+    00:10:43,562 --> 00:10:49,162
+    as pending instances that we're not showing
+    
+    232
+    00:10:49,162 --> 00:10:51,292
+    any stopped instances just to make sure
+    
+    233
+    00:10:51,292 --> 00:10:53,482
+    we don't confuse you here. So this is the
+    
+    234
+    00:10:53,482 --> 00:10:55,772
+    one that is currently running an initializing
+    
+    235
+    00:10:55,892 --> 00:10:58,422
+    this is the one we just started up now, while
+    
+    236
+    00:10:58,422 --> 00:11:00,292
+    it's starting before we can actually ss
+    
+    237
+    00:11:00,292 --> 00:11:02,392
+    h into it because it's still initializing
+    
+    238
+    00:00:00,000 --> 00:11:05,802
+    , i'm going to associate an elastic aip q
+    
+    239
+    00:11:05,802 --> 00:11:08,302
+    this instance so we can connect to it from
+    
+    240
+    00:11:08,302 --> 00:11:11,352
+    the open world, and we can also a cessation
+    
+    241
+    00:11:11,352 --> 00:11:14,302
+    to it. So click yes, allocate, and then you
+    
+    242
+    00:11:14,302 --> 00:11:16,472
+    can right click it or go up to actions up here
+    
+    243
+    00:00:00,000 --> 00:11:18,612
+    , and we're going to associate this address
+    
+    244
+    00:11:18,812 --> 00:11:20,942
+    to a running instance, which is the only
+    
+    245
+    00:11:20,942 --> 00:11:22,652
+    one we have running right now, and we're
+    
+    246
+    00:11:22,652 --> 00:11:25,422
+    going to associate it now. We can go back
+    
+    247
+    00:11:25,422 --> 00:11:28,642
+    to instances and let's way just a few seconds
+    
+    248
+    00:11:28,642 --> 00:11:30,332
+    for it to finish initializing and then i'll
+    
+    249
+    00:11:30,332 --> 00:11:32,522
+    go ahead and ss h into it, solve your right
+    
+    250
+    00:11:32,522 --> 00:11:35,862
+    back, okay? And we're back in the instance
+    
+    251
+    00:11:35,872 --> 00:11:38,962
+    state is running and all checks or go so we
+    
+    252
+    00:11:38,962 --> 00:11:42,182
+    can now connect to this instance, and i just
+    
+    253
+    00:11:42,182 --> 00:11:45,042
+    select this example right here and i'm going
+    
+    254
+    00:11:45,042 --> 00:11:46,772
+    to go in my terminal that's already open
+    
+    255
+    00:11:47,042 --> 00:11:48,952
+    and by the way, i already downloaded this
+    
+    256
+    00:11:48,952 --> 00:11:51,462
+    pm file. In previous lessons, i'm just using
+    
+    257
+    00:11:51,462 --> 00:11:53,822
+    the same as the sage credentials because
+    
+    258
+    00:11:53,822 --> 00:11:55,802
+    there's no reason to change him out for these
+    
+    259
+    00:11:55,902 --> 00:11:58,172
+    lessons. But if you donated your pm filed
+    
+    260
+    00:11:58,172 --> 00:12:00,702
+    for the first time, make sure that you change
+    
+    261
+    00:12:00,732 --> 00:12:02,582
+    permissions on it. Otherwise you will get
+    
+    262
+    00:12:02,582 --> 00:12:06,127
+    denied you can do that with a c h model of four
+    
+    263
+    00:12:06,127 --> 00:12:09,547
+    hundred on the pm file itself. So with that
+    
+    264
+    00:12:09,547 --> 00:12:11,777
+    out of the way, i'm in the same folder, which
+    
+    265
+    00:12:11,777 --> 00:12:14,757
+    is the downloads folder as where my v p c that
+    
+    266
+    00:12:14,757 --> 00:12:17,717
+    pm follows located i can press enter and
+    
+    267
+    00:12:17,717 --> 00:12:20,047
+    i will get connected to the instance itself
+    
+    268
+    00:00:00,000 --> 00:12:22,567
+    . Now that i'm inside of my instance, we need
+    
+    269
+    00:12:22,567 --> 00:12:25,437
+    to install our web server and peach fee engines
+    
+    270
+    00:12:25,487 --> 00:12:28,007
+    so we can execute our code and serve traffic
+    
+    271
+    00:00:00,000 --> 00:12:30,397
+    , and we also need to download the code for
+    
+    272
+    00:12:30,397 --> 00:12:32,777
+    our level application. So the first thing
+    
+    273
+    00:12:32,777 --> 00:12:35,407
+    to do is to update our packages to pseudo
+    
+    274
+    00:12:35,407 --> 00:12:38,687
+    apt get update once that's done, i'm going
+    
+    275
+    00:12:38,687 --> 00:12:40,967
+    to install a few different packages. Now
+    
+    276
+    00:12:40,967 --> 00:12:43,307
+    i'm going to copy paste this from an example
+    
+    277
+    00:12:43,307 --> 00:12:45,547
+    i have because it's a lot of different words
+    
+    278
+    00:12:45,547 --> 00:12:48,457
+    to type and i am going to have this available
+    
+    279
+    00:12:48,457 --> 00:12:51,197
+    to copy and paste above the video itself
+    
+    280
+    00:00:00,000 --> 00:12:53,817
+    , so make sure that you copy that and paste
+    
+    281
+    00:12:53,817 --> 00:12:56,407
+    it that way you avoid having typos in that
+    
+    282
+    00:12:56,407 --> 00:12:58,737
+    sort of thing, so as you can see before i hit
+    
+    283
+    00:00:00,000 --> 00:13:01,597
+    , enter, we are installing gets php five
+    
+    284
+    00:13:01,727 --> 00:13:05,327
+    piece pf pm and genetics and some other php
+    
+    285
+    00:13:05,337 --> 00:13:08,517
+    modules as well as my sequel clients, in
+    
+    286
+    00:13:08,517 --> 00:13:11,307
+    order for our php application to connect
+    
+    287
+    00:13:11,317 --> 00:13:13,507
+    to my sequel, even though it's going to be
+    
+    288
+    00:13:13,507 --> 00:13:15,927
+    on guard. Yes, we need these connector modules
+    
+    289
+    00:00:00,000 --> 00:13:18,787
+    , so it's press enter say yes to this prompt
+    
+    290
+    00:13:19,337 --> 00:13:21,447
+    and is going to install all of this for us
+    
+    291
+    00:00:00,000 --> 00:13:23,107
+    . And what we're installing here is going
+    
+    292
+    00:13:23,107 --> 00:13:25,527
+    to work for a very simple application if
+    
+    293
+    00:13:25,527 --> 00:00:00,000
+    you need more modules like php modules,
+    
+    294
+    00:13:28,067 --> 00:13:30,297
+    feel free to download those for your application
+    
+    295
+    00:00:00,000 --> 00:13:32,137
+    , but in this example, i'm going to try to
+    
+    296
+    00:13:32,137 --> 00:13:34,157
+    keep it a simple us possible, while still
+    
+    297
+    00:13:34,157 --> 00:13:36,647
+    giving you tools to actually use this example
+    
+    298
+    00:13:36,787 --> 00:13:39,797
+    for a production server or for i really php
+    
+    299
+    00:13:39,797 --> 00:13:41,667
+    application for you to be able to play around
+    
+    300
+    00:13:41,667 --> 00:13:44,277
+    with it. Ok, now that we have all of this done
+    
+    301
+    00:00:00,000 --> 00:13:46,617
+    , i'm going to download application code
+    
+    302
+    00:13:46,747 --> 00:13:50,037
+    from one of my repositories. So again, i'm
+    
+    303
+    00:13:50,037 --> 00:13:52,217
+    going to pace this in here and again, this
+    
+    304
+    00:13:52,217 --> 00:13:54,757
+    is available above the video itself on lenox
+    
+    305
+    00:13:54,757 --> 00:13:56,747
+    academy dot com, where you can go and copy
+    
+    306
+    00:13:56,747 --> 00:13:58,737
+    and paste these things, and it will all work
+    
+    307
+    00:13:58,737 --> 00:14:01,087
+    for you. Now, i'm cloning this application
+    
+    308
+    00:00:00,000 --> 00:14:04,811
+    , and what this application does is it's
+    
+    309
+    00:14:04,821 --> 00:14:08,641
+    a clean install of level, but it has a few
+    
+    310
+    00:14:08,641 --> 00:14:10,931
+    extra things in it, like database eating
+    
+    311
+    00:14:11,131 --> 00:14:14,931
+    so that we can cede our rgs my sequel database
+    
+    312
+    00:14:14,931 --> 00:14:16,991
+    with data to make sure that we have a proper
+    
+    313
+    00:14:16,991 --> 00:14:18,691
+    connection. Now we're not actually going
+    
+    314
+    00:14:18,691 --> 00:14:21,571
+    to use the data in this lesson, but that way
+    
+    315
+    00:14:21,571 --> 00:14:23,961
+    it gives you an example of how to see the database
+    
+    316
+    00:14:23,961 --> 00:14:26,941
+    in level, and it also helps us prove that
+    
+    317
+    00:14:26,941 --> 00:14:29,401
+    we have connected. To art yes in fact i'll
+    
+    318
+    00:14:29,401 --> 00:14:31,281
+    show you an example when it doesn't work
+    
+    319
+    00:14:31,441 --> 00:14:33,361
+    how to troubleshoot that and then how to
+    
+    320
+    00:14:33,361 --> 00:14:35,731
+    make sure that it does work so now i have my
+    
+    321
+    00:14:35,731 --> 00:14:38,341
+    application now loaded if i do if i list the
+    
+    322
+    00:14:38,341 --> 00:14:40,781
+    directories in here then i'll see my application
+    
+    323
+    00:14:40,781 --> 00:14:42,871
+    folder i'm going to change my directory
+    
+    324
+    00:14:42,871 --> 00:14:44,811
+    inside of the application folder and then
+    
+    325
+    00:14:44,811 --> 00:14:47,141
+    i have all these different files from that
+    
+    326
+    00:14:47,141 --> 00:14:49,511
+    getup repository now if you've ever used
+    
+    327
+    00:14:49,511 --> 00:14:52,281
+    level you know that we can use composer to
+    
+    328
+    00:14:52,281 --> 00:14:54,351
+    install dependencies and louisville has
+    
+    329
+    00:14:54,351 --> 00:14:56,501
+    quite a few dependencies so let's go ahead
+    
+    330
+    00:14:56,501 --> 00:15:00,781
+    and download composer and install it so
+    
+    331
+    00:15:00,781 --> 00:15:11,001
+    we can leverage its use press enter and by
+    
+    332
+    00:15:11,001 --> 00:15:12,431
+    the way make sure you're in the application
+    
+    333
+    00:15:12,431 --> 00:15:15,321
+    directory itself not outside of it okay
+    
+    334
+    00:00:00,000 --> 00:15:17,371
+    , now that it is successfully installed
+    
+    335
+    00:15:17,501 --> 00:15:22,981
+    we can use php composer dot far her ph jr install
+    
+    336
+    00:15:23,431 --> 00:15:26,001
+    and this will install our level dependencies
+    
+    337
+    00:15:26,011 --> 00:15:29,041
+    from what we have in our composer dot jason
+    
+    338
+    00:15:29,041 --> 00:15:31,591
+    file so i'm not going to walk into the details
+    
+    339
+    00:15:31,591 --> 00:15:34,251
+    of what composer is and how it works but it
+    
+    340
+    00:15:34,251 --> 00:15:36,251
+    is quite useful and we're making use of it
+    
+    341
+    00:15:36,251 --> 00:15:38,011
+    here so if you're interested in learning
+    
+    342
+    00:15:38,011 --> 00:15:39,511
+    more about it i definitely recommend you
+    
+    343
+    00:15:39,511 --> 00:15:42,021
+    check it out you can very much help your php
+    
+    344
+    00:15:42,021 --> 00:15:44,981
+    applications otherwise trying to maintain
+    
+    345
+    00:15:44,981 --> 00:15:46,971
+    all of these dependencies can be a very big
+    
+    346
+    00:15:46,971 --> 00:15:49,401
+    nightmare so this is going to take a few minutes
+    
+    347
+    00:15:49,411 --> 00:15:51,751
+    i'll be right back okay after maybe about
+    
+    348
+    00:15:51,751 --> 00:15:54,291
+    a minute or so we'll have all of our dependencies
+    
+    349
+    00:15:54,291 --> 00:15:57,201
+    loaded and composer will generate a class
+    
+    350
+    00:15:57,201 --> 00:16:00,231
+    loader for us we're ready to go now what we
+    
+    351
+    00:16:00,231 --> 00:16:03,001
+    need to do is we need to configure our application
+    
+    352
+    00:16:03,021 --> 00:16:06,093
+    to connect to our d s and that's how can we
+    
+    353
+    00:16:06,093 --> 00:16:09,333
+    do that? Well, we can use a dotty envy file
+    
+    354
+    00:16:09,333 --> 00:16:11,253
+    and there's an example that comes with this
+    
+    355
+    00:16:11,253 --> 00:16:13,383
+    application so what i can do is that can copy
+    
+    356
+    00:16:13,383 --> 00:16:16,523
+    the example and then i can create the one
+    
+    357
+    00:16:16,523 --> 00:16:18,643
+    we're actually going to use now the reason
+    
+    358
+    00:16:18,643 --> 00:16:22,033
+    i did not put this die envy in the repository
+    
+    359
+    00:16:22,303 --> 00:16:25,223
+    is for best practices because you do not
+    
+    360
+    00:16:25,223 --> 00:16:27,533
+    want to share this day i envy with anyone
+    
+    361
+    00:16:27,533 --> 00:16:29,833
+    in the world not even teammates, not even
+    
+    362
+    00:16:29,833 --> 00:16:31,993
+    developers on your team's everyone should
+    
+    363
+    00:16:31,993 --> 00:16:33,943
+    have their own credentials, especially
+    
+    364
+    00:16:33,943 --> 00:16:36,083
+    in development environments and then you
+    
+    365
+    00:16:36,083 --> 00:16:37,883
+    should have a completely different credential
+    
+    366
+    00:16:37,953 --> 00:16:40,713
+    set of credentials inside of the production
+    
+    367
+    00:16:40,713 --> 00:16:42,593
+    environment as well. So this should never
+    
+    368
+    00:16:42,593 --> 00:16:45,303
+    be checked into a repository at every step
+    
+    369
+    00:16:45,303 --> 00:16:47,713
+    of the way you should change and customize
+    
+    370
+    00:16:47,863 --> 00:16:50,393
+    the variables themselves now we can use
+    
+    371
+    00:16:50,393 --> 00:16:52,953
+    an example like the one i attached to have
+    
+    372
+    00:16:52,953 --> 00:16:55,293
+    a template that we can go off of but do not
+    
+    373
+    00:16:55,293 --> 00:16:57,583
+    check in your credentials now that have
+    
+    374
+    00:16:57,583 --> 00:17:00,643
+    created this i can open it up and i can customize
+    
+    375
+    00:17:00,643 --> 00:17:04,113
+    it so as you see at the top here we have our
+    
+    376
+    00:17:04,163 --> 00:17:07,053
+    ap environment which says local and abdi
+    
+    377
+    00:17:07,053 --> 00:17:09,303
+    buck to truth we're also going to have to
+    
+    378
+    00:17:09,303 --> 00:17:12,093
+    generate a secret key which is not done yet
+    
+    379
+    00:17:12,343 --> 00:17:14,963
+    now for development these would be ok but
+    
+    380
+    00:17:14,963 --> 00:17:16,553
+    not for production. You would probably
+    
+    381
+    00:17:16,553 --> 00:17:18,543
+    want to change this app environment to produce
+    
+    382
+    00:17:18,553 --> 00:17:21,173
+    production or a prod or staging or something
+    
+    383
+    00:17:21,173 --> 00:17:23,393
+    like that and he wouldn't want to do the abdi
+    
+    384
+    00:17:23,393 --> 00:17:26,823
+    bug set to false because abdi bug true shows
+    
+    385
+    00:17:26,823 --> 00:17:29,043
+    you the stack traces which in production
+    
+    386
+    00:17:29,043 --> 00:17:31,463
+    you do not want to do you do not want to give
+    
+    387
+    00:17:31,533 --> 00:17:33,813
+    any of that information to any visitor you
+    
+    388
+    00:17:33,813 --> 00:17:35,603
+    just want to say, hey, something went wrong
+    
+    389
+    00:17:35,723 --> 00:17:38,013
+    and then you send the information to eight
+    
+    390
+    00:17:38,113 --> 00:00:00,000
+    developer who can then fix the problem,
+    
+    391
+    00:17:40,343 --> 00:17:41,843
+    but you don't want to show that to visitors
+    
+    392
+    00:00:00,000 --> 00:17:44,253
+    . We also want to have a secret application
+    
+    393
+    00:17:44,253 --> 00:17:46,093
+    key which i'll show you how to generate in
+    
+    394
+    00:17:46,093 --> 00:17:48,193
+    just a moment now the settings we really
+    
+    395
+    00:17:48,193 --> 00:17:50,683
+    care about right now are the database connections
+    
+    396
+    00:17:51,053 --> 00:17:53,833
+    the database host database, port database
+    
+    397
+    00:00:00,000 --> 00:17:57,013
+    , name, user name and password so the database
+    
+    398
+    00:17:57,013 --> 00:17:59,263
+    connection is going to be my sequel. This
+    
+    399
+    00:17:59,263 --> 00:18:01,553
+    is a my sequel database, which is what i chose
+    
+    400
+    00:18:01,563 --> 00:18:04,943
+    in rgs the host, however, is not going to
+    
+    401
+    00:18:04,943 --> 00:18:07,365
+    be local hose because we're not hosting
+    
+    402
+    00:18:07,365 --> 00:18:10,245
+    are my sequel database on this instance
+    
+    403
+    00:00:00,000 --> 00:18:12,815
+    , if we were this would probably work, but
+    
+    404
+    00:18:12,815 --> 00:18:15,495
+    we're not we're hosting it on amazon so i'm
+    
+    405
+    00:18:15,495 --> 00:18:17,965
+    going to delete this value and i'm going
+    
+    406
+    00:18:17,965 --> 00:18:20,525
+    to go back to amazon council and i'm going
+    
+    407
+    00:18:20,525 --> 00:18:23,665
+    to grab my r d s values which should be done
+    
+    408
+    00:18:23,665 --> 00:18:28,615
+    of booting out by now so let's go to instances
+    
+    409
+    00:18:29,805 --> 00:18:33,345
+    and we see it is available now i can go to details
+    
+    410
+    00:18:33,525 --> 00:18:35,865
+    and i congratulate the end points which
+    
+    411
+    00:18:35,865 --> 00:18:42,115
+    is what we want for this section of our envy
+    
+    412
+    00:18:42,115 --> 00:18:44,325
+    file this is the host this is what we're going
+    
+    413
+    00:18:44,325 --> 00:18:47,485
+    to try to connect to the data be sport is the
+    
+    414
+    00:18:47,485 --> 00:18:49,305
+    exact same so we're not going to change any
+    
+    415
+    00:18:49,305 --> 00:18:51,865
+    of that then we have the database name and
+    
+    416
+    00:18:51,865 --> 00:18:55,875
+    user name so i'm going to copy this and i'm
+    
+    417
+    00:18:55,875 --> 00:18:59,785
+    going to move down here and erase this database
+    
+    418
+    00:18:59,785 --> 00:19:03,915
+    name because it's apt tb and then for the
+    
+    419
+    00:19:03,995 --> 00:19:07,115
+    user name same thing we're erasing this
+    
+    420
+    00:19:07,695 --> 00:19:10,255
+    i used the same values and for the secret
+    
+    421
+    00:19:10,265 --> 00:19:14,645
+    if you remember it's after be ap tv so now
+    
+    422
+    00:19:14,645 --> 00:19:16,695
+    we have all of our credentials properly
+    
+    423
+    00:19:16,695 --> 00:19:19,605
+    configured and mapping to our amazon rgs
+    
+    424
+    00:19:19,605 --> 00:19:22,235
+    my sequel database so what can we do? We can
+    
+    425
+    00:19:22,235 --> 00:19:24,705
+    save this and i had escaped by the way if you're
+    
+    426
+    00:19:24,705 --> 00:19:27,575
+    not used to them you can use escape to escape
+    
+    427
+    00:19:27,575 --> 00:19:30,015
+    out of insert mode and you can hit the letter
+    
+    428
+    00:19:30,025 --> 00:19:32,965
+    i should go inter insert mood and to write
+    
+    429
+    00:19:32,995 --> 00:19:36,535
+    so now i'm going to do colon ex too right and
+    
+    430
+    00:19:36,535 --> 00:19:39,285
+    now we have our database information correctly
+    
+    431
+    00:19:39,285 --> 00:19:42,285
+    mapped to our level application so now it's
+    
+    432
+    00:19:42,285 --> 00:19:45,165
+    time to cede our database with information
+    
+    433
+    00:19:45,215 --> 00:19:47,635
+    this is just fake information that we put
+    
+    434
+    00:19:47,635 --> 00:19:50,275
+    into this example application to show you
+    
+    435
+    00:19:50,275 --> 00:19:53,235
+    that it is properly connecting to our database
+    
+    436
+    00:19:53,255 --> 00:19:55,555
+    and inserting those values as well as creating
+    
+    437
+    00:19:55,555 --> 00:19:58,095
+    database tables. Now, like i said, i'm going
+    
+    438
+    00:19:58,095 --> 00:20:00,845
+    to show you why it's not working right now
+    
+    439
+    00:00:00,000 --> 00:20:02,625
+    , even though we've set this up, we're going
+    
+    440
+    00:20:02,625 --> 00:20:04,035
+    to trouble shoot and then we're going to
+    
+    441
+    00:20:04,035 --> 00:20:06,162
+    fix it and try again and it will work. So let
+    
+    442
+    00:20:06,162 --> 00:20:09,522
+    me try toe see this database when he's the
+    
+    443
+    00:20:09,522 --> 00:20:13,002
+    command php artisan key generate first
+    
+    444
+    00:20:13,002 --> 00:20:15,742
+    of all because i want to generate that application
+    
+    445
+    00:20:15,742 --> 00:20:17,592
+    key i was telling you about so it's going
+    
+    446
+    00:20:17,592 --> 00:20:19,632
+    to set that up for us and then i'm going to
+    
+    447
+    00:20:19,632 --> 00:20:24,012
+    php artisan migrate dash dash seed so this
+    
+    448
+    00:20:24,012 --> 00:20:27,172
+    is going to try to cede our database and it's
+    
+    449
+    00:20:27,172 --> 00:20:30,632
+    going to fail. So why did this fail? Why does
+    
+    450
+    00:20:30,632 --> 00:20:32,882
+    it say it cannot connect to our my sequel
+    
+    451
+    00:20:32,882 --> 00:20:35,422
+    server it's because of security groups
+    
+    452
+    00:00:00,000 --> 00:20:37,782
+    ? If you remember, we created a new security
+    
+    453
+    00:20:37,782 --> 00:20:41,512
+    group for our or the s instance but by default
+    
+    454
+    00:20:41,602 --> 00:20:44,792
+    it's blocking traffic from coming in, which
+    
+    455
+    00:20:44,792 --> 00:20:46,502
+    is a security feature that's exactly what
+    
+    456
+    00:20:46,502 --> 00:20:50,062
+    we want, however, we want our easy two instances
+    
+    457
+    00:20:50,062 --> 00:20:52,442
+    or our web server instances to be able to
+    
+    458
+    00:20:52,442 --> 00:20:54,542
+    communicate with our database, so how can
+    
+    459
+    00:20:54,542 --> 00:20:56,502
+    we do that? Let's, go back to our dashboard
+    
+    460
+    00:20:56,752 --> 00:20:59,162
+    and let's go to the sea to management council
+    
+    461
+    00:20:59,462 --> 00:21:03,642
+    and then we can go to security groups inside
+    
+    462
+    00:21:03,642 --> 00:21:07,002
+    of security groups. We have our our d s launch
+    
+    463
+    00:21:07,002 --> 00:21:09,712
+    wizard, which is what was created for us
+    
+    464
+    00:21:09,712 --> 00:21:12,562
+    when we launch our rgs instance. As you can
+    
+    465
+    00:21:12,562 --> 00:21:16,212
+    see in the inbound rule, we only allow something
+    
+    466
+    00:21:16,222 --> 00:21:19,102
+    very specific from a very specific source
+    
+    467
+    00:21:19,312 --> 00:21:22,922
+    toe access our instance from tcp using this
+    
+    468
+    00:21:22,922 --> 00:21:25,872
+    port range this does not allow are easy to
+    
+    469
+    00:21:25,872 --> 00:21:27,732
+    instance to go through, which we need to
+    
+    470
+    00:21:27,732 --> 00:21:30,112
+    fix. Now, if you remember when i created
+    
+    471
+    00:21:30,112 --> 00:21:32,492
+    this easy to instance and in the future when
+    
+    472
+    00:21:32,492 --> 00:21:34,872
+    i want to create any web server instances
+    
+    473
+    00:00:00,000 --> 00:21:38,132
+    , i want to use this security group name the
+    
+    474
+    00:21:38,132 --> 00:21:41,322
+    ap p c to security group so what can i do? I
+    
+    475
+    00:21:41,322 --> 00:21:44,312
+    can actually grab this group. I'd copy it
+    
+    476
+    00:00:00,000 --> 00:21:47,672
+    . Go back to my rgs security group, edit the
+    
+    477
+    00:21:47,672 --> 00:21:51,132
+    inbound rules at a custom tcp rule just like
+    
+    478
+    00:21:51,132 --> 00:21:53,942
+    we have up here for port range thirty three
+    
+    479
+    00:21:53,942 --> 00:21:56,852
+    o six because our a c two instances are communicating
+    
+    480
+    00:21:56,852 --> 00:21:59,082
+    to the database through port thirty three
+    
+    481
+    00:21:59,082 --> 00:22:02,302
+    o six via the tcp protocol. And then what
+    
+    482
+    00:22:02,302 --> 00:22:05,192
+    i can do is i can paste our security group
+    
+    483
+    00:22:05,192 --> 00:22:07,757
+    i d and they will recognize it. You can click
+    
+    484
+    00:22:07,757 --> 00:22:11,477
+    on it and hit save that will now allow it to
+    
+    485
+    00:22:11,477 --> 00:22:15,037
+    go through if i go to the outbound tab i'll
+    
+    486
+    00:22:15,037 --> 00:22:17,347
+    see that all traffic is allowed to go out
+    
+    487
+    00:22:17,357 --> 00:22:19,947
+    to all destinations so we don't need to modify
+    
+    488
+    00:22:19,947 --> 00:22:23,727
+    anything there so now let's go back to our
+    
+    489
+    00:22:23,727 --> 00:22:25,937
+    a c two instance and let's try this again
+    
+    490
+    00:22:27,367 --> 00:22:29,207
+    we see that the migration table created
+    
+    491
+    00:22:29,207 --> 00:22:31,987
+    successfully we migrated all of these different
+    
+    492
+    00:22:31,987 --> 00:22:35,067
+    tables and it executed those scripts and
+    
+    493
+    00:22:35,077 --> 00:22:37,637
+    seated those tables with information so
+    
+    494
+    00:22:37,637 --> 00:22:40,117
+    we were able to successfully connect to
+    
+    495
+    00:22:40,117 --> 00:22:42,897
+    our already s instance which is on amazon
+    
+    496
+    00:22:42,897 --> 00:22:45,347
+    web services so this works we have our level
+    
+    497
+    00:22:45,347 --> 00:22:47,477
+    application connected to our database
+    
+    498
+    00:22:47,477 --> 00:22:50,087
+    on amazon web services okay, so what do we
+    
+    499
+    00:22:50,087 --> 00:22:52,977
+    need to do now? Well, if you remember i installed
+    
+    500
+    00:22:52,977 --> 00:22:56,577
+    in genetics and i have p h p f p m engine x will
+    
+    501
+    00:22:56,577 --> 00:23:00,967
+    send any php request from a user to p h p f p
+    
+    502
+    00:23:00,967 --> 00:23:03,577
+    m which will run the script and send the result
+    
+    503
+    00:23:03,577 --> 00:23:05,547
+    back to engine x which will then send the
+    
+    504
+    00:23:05,547 --> 00:23:07,837
+    result back to our user so those two need
+    
+    505
+    00:23:07,837 --> 00:23:09,767
+    to work together and communicate together
+    
+    506
+    00:23:09,857 --> 00:23:12,277
+    and engine next needs to be properly configured
+    
+    507
+    00:23:12,517 --> 00:23:15,817
+    to route php requests to where he needs to
+    
+    508
+    00:23:15,817 --> 00:23:18,487
+    go how can we do that? Well, first of all let's
+    
+    509
+    00:23:18,487 --> 00:23:20,557
+    make sure the engine x is actually running
+    
+    510
+    00:23:20,557 --> 00:23:23,227
+    and we can do that with a curl on local host
+    
+    511
+    00:23:23,607 --> 00:23:25,697
+    and we'll see welcome ten genetics thank
+    
+    512
+    00:23:25,697 --> 00:23:27,687
+    you for using engine x so this is working
+    
+    513
+    00:23:27,687 --> 00:23:29,887
+    right but we want change this page we want
+    
+    514
+    00:23:29,887 --> 00:23:32,207
+    to serve traffic to our level education
+    
+    515
+    00:23:32,527 --> 00:23:34,387
+    so where is this page and what's going on
+    
+    516
+    00:23:34,387 --> 00:23:36,537
+    here? Well if we change our directory to
+    
+    517
+    00:23:36,537 --> 00:23:42,557
+    user share engine next and if i list what's
+    
+    518
+    00:23:42,557 --> 00:23:46,627
+    going on in here i'll see that i have an html
+    
+    519
+    00:23:46,627 --> 00:23:49,427
+    directory inside of this html directory
+    
+    520
+    00:23:49,567 --> 00:23:52,827
+    i have two pages a fifty x study she mel and
+    
+    521
+    00:23:52,827 --> 00:23:54,857
+    the index finished email so this is what's
+    
+    522
+    00:23:54,857 --> 00:23:57,337
+    being currently served when we do a curl
+    
+    523
+    00:23:57,337 --> 00:24:00,087
+    on local host so first of all let me actually
+    
+    524
+    00:24:00,087 --> 00:24:02,347
+    move our application to this directory
+    
+    525
+    00:24:02,667 --> 00:24:06,017
+    so we can do that with a pseudo move app which
+    
+    526
+    00:24:06,017 --> 00:24:08,106
+    is where i have my app installed and i want
+    
+    527
+    00:24:08,106 --> 00:24:10,716
+    to move it here where i'm currently yet so
+    
+    528
+    00:24:10,716 --> 00:24:12,386
+    i do that and then i can list the directory
+    
+    529
+    00:24:12,386 --> 00:24:14,206
+    and we see that we have successfully moved
+    
+    530
+    00:24:14,206 --> 00:24:16,646
+    the application to this directory here
+    
+    531
+    00:24:16,866 --> 00:24:18,536
+    which is where engine x is looking to sort
+    
+    532
+    00:24:18,536 --> 00:24:21,026
+    of traffic but we still have to point it to
+    
+    533
+    00:24:21,026 --> 00:24:23,806
+    our application instead of the html directory
+    
+    534
+    00:00:00,000 --> 00:24:26,236
+    . We now need to go in the engine ex configuration
+    
+    535
+    00:24:26,236 --> 00:24:28,506
+    and change it. We can do that with pseudo
+    
+    536
+    00:24:28,506 --> 00:24:32,616
+    vim at sea and genetics in these sites available
+    
+    537
+    00:24:32,976 --> 00:24:35,506
+    and we're going to use the default now as
+    
+    538
+    00:24:35,506 --> 00:24:37,716
+    a general practice usually want to copy
+    
+    539
+    00:24:37,716 --> 00:24:40,266
+    this default file, move it somewhere else
+    
+    540
+    00:24:40,296 --> 00:24:43,526
+    or disable it and then create a new configuration
+    
+    541
+    00:24:43,526 --> 00:24:45,806
+    file to serve your websites just for the
+    
+    542
+    00:24:45,806 --> 00:24:47,796
+    sake of this lesson i'm not going to do that
+    
+    543
+    00:24:47,796 --> 00:24:50,256
+    but it's a good idea to keep it back up instead
+    
+    544
+    00:24:50,256 --> 00:24:52,056
+    you can read through these comments at your
+    
+    545
+    00:24:52,056 --> 00:24:54,176
+    own leisure and what i'm going to do is i'm
+    
+    546
+    00:24:54,176 --> 00:24:56,116
+    going to go to these lines here and i'm going
+    
+    547
+    00:24:56,116 --> 00:24:58,586
+    to change these two lines a little bit so
+    
+    548
+    00:24:58,586 --> 00:25:00,226
+    first of all i'm going to change this guy
+    
+    549
+    00:25:00,226 --> 00:25:02,636
+    right here where i need to add index that
+    
+    550
+    00:25:02,636 --> 00:25:05,186
+    php so that it will look for an index that
+    
+    551
+    00:25:05,186 --> 00:25:08,196
+    php follow instead of just html files then
+    
+    552
+    00:25:08,196 --> 00:25:10,316
+    i'm going to go one line above i'm going to
+    
+    553
+    00:25:10,316 --> 00:25:14,386
+    erase this html we want our roots to point
+    
+    554
+    00:25:14,396 --> 00:25:18,406
+    to lay ravel which is app slash public because
+    
+    555
+    00:25:18,406 --> 00:25:21,066
+    our in next that php file is in the public
+    
+    556
+    00:25:21,066 --> 00:25:23,776
+    directory and that in turn is inside of our
+    
+    557
+    00:25:23,786 --> 00:25:26,326
+    app directory that we just moved at that
+    
+    558
+    00:25:26,326 --> 00:25:28,636
+    directory here okay, so we've got that out
+    
+    559
+    00:25:28,636 --> 00:25:31,696
+    of the way now i need to move down just a little
+    
+    560
+    00:25:31,696 --> 00:25:35,036
+    bit and all this looks good but we want to
+    
+    561
+    00:25:35,036 --> 00:25:38,716
+    enable the location block for our php scripts
+    
+    562
+    00:25:39,036 --> 00:25:42,206
+    so if someone requests a euro pointing to
+    
+    563
+    00:25:42,206 --> 00:25:44,466
+    a php script which is obviously going to
+    
+    564
+    00:25:44,466 --> 00:25:46,916
+    happen in our piece provocation we want
+    
+    565
+    00:25:46,926 --> 00:25:49,726
+    all this block to execute and this is what
+    
+    566
+    00:25:49,726 --> 00:25:52,106
+    tells engine x what to do with the request
+    
+    567
+    00:25:52,536 --> 00:25:54,056
+    so what i'm going to do here is i'm actually
+    
+    568
+    00:25:54,056 --> 00:25:56,766
+    going to remove these comments because
+    
+    569
+    00:25:56,766 --> 00:25:58,476
+    we're not going to modify this a whole lot
+    
+    570
+    00:00:00,000 --> 00:26:00,606
+    , but we do want to modify it just a little
+    
+    571
+    00:26:00,606 --> 00:26:02,806
+    bit now i'm not going to walk through every
+    
+    572
+    00:26:02,806 --> 00:26:04,646
+    single line of this configuration if you
+    
+    573
+    00:26:04,646 --> 00:26:06,546
+    want to learn more about in genetics, i highly
+    
+    574
+    00:26:06,546 --> 00:26:08,206
+    recommend that you check out our courses
+    
+    575
+    00:26:08,206 --> 00:26:10,616
+    on that as well as the documentation itself
+    
+    576
+    00:00:00,000 --> 00:26:12,826
+    . What i'm going to tell you though, is that
+    
+    577
+    00:26:12,826 --> 00:26:15,886
+    we have two options here we could use php
+    
+    578
+    00:26:15,886 --> 00:26:20,916
+    five c g i or we could use php five f p m using
+    
+    579
+    00:26:20,916 --> 00:26:24,296
+    this line with the fast c g i pass with the
+    
+    580
+    00:26:24,306 --> 00:26:28,336
+    i p address we'll use tcp ports for a connection
+    
+    581
+    00:26:28,346 --> 00:26:31,736
+    to php five c g i but what we want to do is we
+    
+    582
+    00:26:31,736 --> 00:26:35,936
+    want to use php five pm using unix sockets
+    
+    583
+    00:26:36,246 --> 00:26:39,456
+    this is faster and more beneficial for a
+    
+    584
+    00:26:39,456 --> 00:26:41,546
+    few other reasons as well. So whenever you
+    
+    585
+    00:26:41,546 --> 00:26:44,596
+    can you would want to use unix sockets and
+    
+    586
+    00:26:44,596 --> 00:26:47,266
+    set of tcp ports, which is what we're doing
+    
+    587
+    00:26:47,266 --> 00:26:50,446
+    here then we want to also enable this line
+    
+    588
+    00:26:50,656 --> 00:26:54,216
+    as well as this line and this line as well
+    
+    589
+    00:00:00,000 --> 00:26:58,126
+    . So now we have our block or all of the information
+    
+    590
+    00:26:58,126 --> 00:26:59,916
+    inside the block that we want we can scroll
+    
+    591
+    00:26:59,916 --> 00:27:01,596
+    down and look at other stuff, but this is
+    
+    592
+    00:27:01,596 --> 00:27:03,706
+    all we need we're not going to enable ssl
+    
+    593
+    00:27:03,706 --> 00:27:05,996
+    or anything like that so let's save this
+    
+    594
+    00:27:05,996 --> 00:27:09,686
+    file now and let's restart both engine x
+    
+    595
+    00:27:09,896 --> 00:27:14,646
+    and peach p f p m and i'm gonna do engine next
+    
+    596
+    00:27:14,646 --> 00:27:21,116
+    now and now that's curl local host to see
+    
+    597
+    00:27:21,116 --> 00:27:24,616
+    if it works. It doesn't. We don't get anything
+    
+    598
+    00:27:24,616 --> 00:27:26,606
+    back what's going on what's the problem
+    
+    599
+    00:27:26,606 --> 00:27:29,656
+    here this is actually because of a permission
+    
+    600
+    00:27:29,826 --> 00:27:32,636
+    on our application directory or more specifically
+    
+    601
+    00:00:00,000 --> 00:27:34,876
+    , the storage directory. It's not able to
+    
+    602
+    00:27:34,876 --> 00:27:38,286
+    write to it? How do i know this? Because if
+    
+    603
+    00:27:38,286 --> 00:27:42,536
+    you go in the log file the error log file for
+    
+    604
+    00:27:42,536 --> 00:27:46,716
+    engine x, it will tell you this so i scroll
+    
+    605
+    00:27:46,716 --> 00:27:49,236
+    all the way down and we can see that we have
+    
+    606
+    00:27:49,236 --> 00:27:52,346
+    a problem. We have a fatal php error because
+    
+    607
+    00:27:52,356 --> 00:27:55,216
+    it could not open a stream permission denied
+    
+    608
+    00:27:55,446 --> 00:27:57,886
+    for are cashing information and for our
+    
+    609
+    00:27:57,886 --> 00:28:00,256
+    storage logs, et cetera. So how can we fix
+    
+    610
+    00:28:00,256 --> 00:28:02,086
+    that? Well, we can get out of here first of
+    
+    611
+    00:28:02,086 --> 00:28:05,576
+    all, and then we can change the permissions
+    
+    612
+    00:28:05,856 --> 00:28:07,246
+    so we're going to do is i'm gonna go inside
+    
+    613
+    00:28:07,246 --> 00:28:09,211
+    of our app directory, and i'm going to do
+    
+    614
+    00:28:09,211 --> 00:28:14,971
+    a pseudo c h o w n dash capital are for recursive
+    
+    615
+    00:28:15,391 --> 00:28:19,211
+    dub dub dub dash data, which is the user as
+    
+    616
+    00:28:19,211 --> 00:28:23,031
+    well as the group on the storage directory
+    
+    617
+    00:00:00,000 --> 00:28:27,971
+    . Now let's, try again, as you can see, we
+    
+    618
+    00:28:27,971 --> 00:28:31,081
+    get our response back for our level five
+    
+    619
+    00:28:31,161 --> 00:28:34,011
+    welcome page i can't even verify this by
+    
+    620
+    00:28:34,011 --> 00:28:36,921
+    going back to our e c two dashboard and accessing
+    
+    621
+    00:28:36,921 --> 00:28:40,201
+    the elastic i pee in my browser. So this is
+    
+    622
+    00:28:40,201 --> 00:28:44,031
+    our public i p i can copy and paste it and we
+    
+    623
+    00:28:44,031 --> 00:28:47,771
+    see our level five welcome page. It is successfully
+    
+    624
+    00:28:47,771 --> 00:28:50,591
+    serving our php application perfect! We
+    
+    625
+    00:28:50,591 --> 00:28:52,781
+    have a level five application up and running
+    
+    626
+    00:28:52,901 --> 00:28:54,831
+    and it's also connected to our database
+    
+    627
+    00:28:55,251 --> 00:28:58,081
+    engine x and p h p f p m or properly configured
+    
+    628
+    00:00:00,000 --> 00:29:01,181
+    . So now it's time to create an image out of
+    
+    629
+    00:29:01,181 --> 00:29:03,621
+    this instance so that we can feed it into
+    
+    630
+    00:29:03,621 --> 00:29:06,371
+    our auto scaling and create more identical
+    
+    631
+    00:29:06,371 --> 00:29:08,921
+    instances, and we can also put these in our
+    
+    632
+    00:29:08,921 --> 00:29:11,331
+    private submits now that we're done so let's
+    
+    633
+    00:00:00,000 --> 00:29:14,041
+    , go back to our e c two dashboard and i'm going
+    
+    634
+    00:29:14,041 --> 00:29:19,591
+    to create an image out of this. I'm going
+    
+    635
+    00:29:19,591 --> 00:29:24,021
+    to call this web server image and use that
+    
+    636
+    00:29:24,021 --> 00:29:26,791
+    as the description as well and let's create
+    
+    637
+    00:29:26,791 --> 00:29:30,731
+    this image. So now we have our am i being created
+    
+    638
+    00:29:30,961 --> 00:29:32,941
+    let's! Go ahead and create our load balancer
+    
+    639
+    00:29:33,641 --> 00:29:36,171
+    let me go to the load balancers and i'm going
+    
+    640
+    00:29:36,171 --> 00:29:38,961
+    to create a load balancer. Now this load
+    
+    641
+    00:29:38,961 --> 00:29:42,141
+    balancer is going to be named ap load balancer
+    
+    642
+    00:29:42,681 --> 00:29:44,931
+    very creative name, and then we're gonna
+    
+    643
+    00:29:44,931 --> 00:29:47,841
+    create this inside of r v p c we do not want
+    
+    644
+    00:29:47,841 --> 00:29:49,981
+    to create an internal load balancer this
+    
+    645
+    00:29:49,981 --> 00:29:51,371
+    is going to be an external facing a little
+    
+    646
+    00:29:51,371 --> 00:29:53,151
+    balancer where all of our requests they're
+    
+    647
+    00:29:53,151 --> 00:29:56,131
+    going to go and be routed to our a c two instances
+    
+    648
+    00:00:00,000 --> 00:29:58,251
+    , and we want to make sure that we're listening
+    
+    649
+    00:29:58,251 --> 00:30:01,571
+    to port eighty okay, now what we need to do
+    
+    650
+    00:30:01,571 --> 00:30:04,131
+    is we need to select the sub nets and each
+    
+    651
+    00:30:04,131 --> 00:30:06,281
+    availability zone where we want to rout
+    
+    652
+    00:30:06,281 --> 00:30:08,621
+    out traffic to our instances are going to
+    
+    653
+    00:30:08,621 --> 00:30:11,444
+    be in both private sub nets. So these air
+    
+    654
+    00:30:11,444 --> 00:30:13,504
+    these two guys right here, so i'm going to
+    
+    655
+    00:30:13,514 --> 00:30:15,524
+    add this one, and then i'm gonna add this
+    
+    656
+    00:30:15,524 --> 00:30:18,294
+    one as well. So now that added, these two
+    
+    657
+    00:30:18,294 --> 00:30:20,654
+    private submits where we have our, where
+    
+    658
+    00:30:20,654 --> 00:30:22,734
+    we're going to have or private instances
+    
+    659
+    00:30:22,824 --> 00:30:24,964
+    we get this. We're little warning down here
+    
+    660
+    00:30:24,964 --> 00:30:26,904
+    that says this is an internet facing yell
+    
+    661
+    00:30:26,904 --> 00:30:28,844
+    be, but there isn't no internet gateway
+    
+    662
+    00:30:28,844 --> 00:30:30,904
+    attached to the sub net you have just selected
+    
+    663
+    00:00:00,000 --> 00:30:32,864
+    , which doesn't make a whole lot of sense
+    
+    664
+    00:00:00,000 --> 00:30:35,254
+    , right? Well, this is kind of weird, but
+    
+    665
+    00:30:35,254 --> 00:30:37,654
+    we actually need to create another public
+    
+    666
+    00:30:37,654 --> 00:30:40,094
+    sub net, and we actually need to associate
+    
+    667
+    00:30:40,284 --> 00:30:43,404
+    the public sub nets to our selected suddenness
+    
+    668
+    00:30:43,404 --> 00:30:46,614
+    here instead of the private submits where
+    
+    669
+    00:30:46,614 --> 00:00:00,000
+    are instances are actually going to be?
+    
+    670
+    00:30:49,304 --> 00:30:51,334
+    This is really weird, but this is kind of
+    
+    671
+    00:30:51,334 --> 00:30:54,664
+    a little lb trick that you are going to run
+    
+    672
+    00:30:54,664 --> 00:30:56,774
+    into if you're following along so we need
+    
+    673
+    00:30:56,774 --> 00:30:59,814
+    to do is when you go back to amazon vpc dashboard
+    
+    674
+    00:30:59,814 --> 00:31:02,854
+    and create a second public sub net in the
+    
+    675
+    00:31:02,854 --> 00:31:06,274
+    same availability zone as our other private
+    
+    676
+    00:31:06,274 --> 00:31:09,384
+    submit so we need once public sub net for
+    
+    677
+    00:31:09,384 --> 00:31:12,004
+    each availability zone of our private submit
+    
+    678
+    00:31:12,254 --> 00:31:14,924
+    so let's go inside of sub nets and here we
+    
+    679
+    00:31:14,924 --> 00:31:18,294
+    see the public one is for two a one of our private
+    
+    680
+    00:31:18,294 --> 00:31:21,624
+    ones is for two way as well and the other privates
+    
+    681
+    00:31:21,624 --> 00:31:24,634
+    for to be so now we need to create a public
+    
+    682
+    00:31:24,634 --> 00:31:27,384
+    summit for availability zone to be which
+    
+    683
+    00:31:27,384 --> 00:31:31,144
+    is really weird so i can do app private tenn
+    
+    684
+    00:31:31,144 --> 00:31:33,544
+    dot zero dot three dot zero which is not used
+    
+    685
+    00:31:33,544 --> 00:31:36,814
+    yet i'm gonna copy this guy launch it in the
+    
+    686
+    00:31:36,814 --> 00:31:40,204
+    right v p c and make sure to choose vill though
+    
+    687
+    00:31:40,204 --> 00:31:42,834
+    his own to be or whatever matches your private
+    
+    688
+    00:31:42,834 --> 00:31:45,164
+    submit that doesn't have a public submit
+    
+    689
+    00:31:45,164 --> 00:31:48,854
+    to match it so let's create this one now we
+    
+    690
+    00:31:48,854 --> 00:31:50,944
+    have our and actually this should be public
+    
+    691
+    00:31:50,944 --> 00:31:55,554
+    not private so now we have our public sub
+    
+    692
+    00:31:55,554 --> 00:31:59,094
+    net which we have two routes to our internet
+    
+    693
+    00:31:59,094 --> 00:32:02,974
+    gateway so i need to select the ap public
+    
+    694
+    00:32:02,984 --> 00:32:06,964
+    route save this then we can go to route tables
+    
+    695
+    00:32:07,554 --> 00:32:10,124
+    click on the app public and make sure that
+    
+    696
+    00:32:10,124 --> 00:32:12,540
+    we associate the sub nets and actually it
+    
+    697
+    00:32:12,540 --> 00:32:14,540
+    is already associate it because i just did
+    
+    698
+    00:32:14,540 --> 00:32:17,240
+    that any subject control panel but if it's
+    
+    699
+    00:32:17,240 --> 00:32:19,370
+    not make sure you added in here, so now we
+    
+    700
+    00:32:19,370 --> 00:32:21,640
+    have an internet gateway attached to our
+    
+    701
+    00:32:21,640 --> 00:32:24,220
+    public sub net, so it is indeed a public submit
+    
+    702
+    00:32:24,590 --> 00:32:26,960
+    now we can go back to our low balancer dashboard
+    
+    703
+    00:32:27,040 --> 00:32:30,810
+    copy this and let's cancel and that's creating
+    
+    704
+    00:32:30,810 --> 00:32:33,650
+    new low down sir. So this was just a troubleshooting
+    
+    705
+    00:32:33,650 --> 00:32:35,900
+    exercise. You could be banging your head
+    
+    706
+    00:32:35,900 --> 00:32:37,420
+    on this one for a little while because it's
+    
+    707
+    00:32:37,420 --> 00:32:40,260
+    not very intuitive. So now i'm going to select
+    
+    708
+    00:32:40,270 --> 00:32:43,070
+    both of our public submits this is the first
+    
+    709
+    00:32:43,070 --> 00:32:47,630
+    one and this is the second one, so these public
+    
+    710
+    00:32:47,630 --> 00:32:50,400
+    sub nets matched the availability zones
+    
+    711
+    00:32:50,410 --> 00:32:53,910
+    of the private sub nets so it's going to properly
+    
+    712
+    00:32:53,910 --> 00:32:57,030
+    route to r e c two instances in the private
+    
+    713
+    00:32:57,030 --> 00:32:58,720
+    seven it's so we're still launching these
+    
+    714
+    00:32:58,720 --> 00:33:00,960
+    two instances in the private sub net, which
+    
+    715
+    00:33:00,960 --> 00:33:02,820
+    is why i'm saying that this is kind of tricky
+    
+    716
+    00:33:03,110 --> 00:33:05,740
+    and not that easy to figure out. Ok, so let's
+    
+    717
+    00:00:00,000 --> 00:33:08,370
+    , move on and assign a security group. I'm
+    
+    718
+    00:33:08,370 --> 00:33:10,050
+    going to create a new security group this
+    
+    719
+    00:33:10,050 --> 00:33:15,230
+    time i'm going to allow hb traffic from anywhere
+    
+    720
+    00:33:15,380 --> 00:33:19,600
+    hcps traffic from anywhere, and we are good
+    
+    721
+    00:33:19,600 --> 00:33:23,170
+    to go now, so we are allowing to receive hp
+    
+    722
+    00:33:23,170 --> 00:33:26,450
+    and h p s requests for our load balancer let
+    
+    723
+    00:33:26,450 --> 00:33:31,440
+    me name this app load dancer security group
+    
+    724
+    00:33:35,940 --> 00:33:38,140
+    we're not going to miss with this let's move
+    
+    725
+    00:33:38,140 --> 00:33:40,620
+    on to the health check configuration now
+    
+    726
+    00:33:40,620 --> 00:33:42,720
+    this is interesting here our health check
+    
+    727
+    00:33:42,730 --> 00:33:45,430
+    will ping something on the instance and
+    
+    728
+    00:33:45,430 --> 00:33:48,000
+    if the instances not responsive, the load
+    
+    729
+    00:33:48,000 --> 00:33:50,240
+    balancer will automatically stop serving
+    
+    730
+    00:33:50,240 --> 00:33:53,120
+    traffic to that instance so the instance
+    
+    731
+    00:33:53,120 --> 00:33:55,020
+    will still be a member of the elastic low
+    
+    732
+    00:33:55,020 --> 00:33:56,990
+    balance or group but it will not receive
+    
+    733
+    00:33:56,990 --> 00:33:59,810
+    any traffic for a dedicated period of time
+    
+    734
+    00:34:00,170 --> 00:34:03,110
+    that way we don't have any users not receiving
+    
+    735
+    00:34:03,110 --> 00:34:05,970
+    a response back, so here we can choose which
+    
+    736
+    00:34:05,970 --> 00:34:09,360
+    protocol we want to use to check for this
+    
+    737
+    00:34:09,560 --> 00:34:11,954
+    so i'm going to paying on port eighty and
+    
+    738
+    00:34:11,954 --> 00:34:14,524
+    i'm going to paying it index dot php instead
+    
+    739
+    00:34:14,524 --> 00:34:18,394
+    of index dot html using the h peeping protocol
+    
+    740
+    00:34:18,774 --> 00:34:21,644
+    in the advanced details let's change our
+    
+    741
+    00:34:21,644 --> 00:34:26,254
+    health check interval two ten seconds instead
+    
+    742
+    00:34:26,254 --> 00:34:29,154
+    of thirty seconds for the healthy threshold
+    
+    743
+    00:34:29,394 --> 00:34:33,194
+    let's set it to two seconds now what this
+    
+    744
+    00:34:33,194 --> 00:34:35,434
+    setting does is it defines the number of
+    
+    745
+    00:34:35,434 --> 00:34:38,014
+    consecutive successful health checks
+    
+    746
+    00:34:38,214 --> 00:34:40,704
+    that need to happen before we declare and
+    
+    747
+    00:34:40,704 --> 00:34:43,084
+    easy to instance to be healthy and start
+    
+    748
+    00:34:43,084 --> 00:34:45,654
+    serving traffic to it again. The unhealthy
+    
+    749
+    00:34:45,654 --> 00:34:48,214
+    threshold right above that is the opposite
+    
+    750
+    00:00:00,000 --> 00:34:50,694
+    . It defines how many consecutive failed
+    
+    751
+    00:34:50,704 --> 00:34:53,904
+    health checks need to happen before declaring
+    
+    752
+    00:34:53,904 --> 00:34:56,404
+    the easy to instance unhealthy and stopping
+    
+    753
+    00:34:56,404 --> 00:34:58,934
+    to send traffic to it for that predetermine
+    
+    754
+    00:34:58,934 --> 00:35:00,444
+    period of time that we have control over
+    
+    755
+    00:35:00,444 --> 00:35:03,174
+    here okay, so let's go ahead and hit on ad
+    
+    756
+    00:35:03,184 --> 00:35:05,994
+    east two instances now, i'm not going to
+    
+    757
+    00:35:05,994 --> 00:35:08,664
+    add this easy to instance, because this
+    
+    758
+    00:35:08,664 --> 00:35:10,274
+    is just an image we're going to shut this
+    
+    759
+    00:35:10,274 --> 00:35:13,094
+    one down and launch some new ones. I am going
+    
+    760
+    00:35:13,094 --> 00:35:15,854
+    to enable cross zone load balancing, and
+    
+    761
+    00:35:15,854 --> 00:00:00,000
+    i'm not going to change this right here.
+    
+    762
+    00:35:17,954 --> 00:35:20,124
+    I'm not going to tag it, i'm just gonna head
+    
+    763
+    00:35:20,124 --> 00:35:22,334
+    on review and create, and then i'm going
+    
+    764
+    00:35:22,334 --> 00:35:28,294
+    to hit create so now what we could actually
+    
+    765
+    00:35:28,294 --> 00:00:00,000
+    do is we could go to our security groups,
+    
+    766
+    00:35:30,834 --> 00:35:32,754
+    and we could on lee, allow traffic for r a
+    
+    767
+    00:35:32,754 --> 00:35:35,924
+    c two instances from the low balancer itself
+    
+    768
+    00:00:00,000 --> 00:35:38,414
+    , which is another precaution no one can
+    
+    769
+    00:35:38,414 --> 00:35:40,374
+    access unless it's coming from the load
+    
+    770
+    00:35:40,374 --> 00:35:43,684
+    balancer or the rt s instance as well so it
+    
+    771
+    00:35:43,684 --> 00:35:45,984
+    can receive responses back from the rt s
+    
+    772
+    00:35:45,984 --> 00:35:48,194
+    database. I'm not going to do this just to
+    
+    773
+    00:35:48,194 --> 00:35:49,894
+    save a little bit of time, and you should
+    
+    774
+    00:35:49,894 --> 00:35:51,814
+    already know how to do it, so i'll leave that
+    
+    775
+    00:35:51,814 --> 00:35:53,774
+    as an exercise for you if you're following
+    
+    776
+    00:35:53,774 --> 00:35:56,204
+    along. So now about this time, the image
+    
+    777
+    00:35:56,204 --> 00:35:58,254
+    should be finished creating, and it is we
+    
+    778
+    00:35:58,254 --> 00:36:00,624
+    have a web server image, i'm going to lead
+    
+    779
+    00:36:00,624 --> 00:36:05,314
+    this one. This is irrelevant to this, so
+    
+    780
+    00:36:05,314 --> 00:36:07,994
+    we have our web server image now we can go
+    
+    781
+    00:36:07,994 --> 00:36:10,454
+    to our instances and terminate this one
+    
+    782
+    00:36:10,454 --> 00:36:13,017
+    because we don't need it anymore. Someone
+    
+    783
+    00:36:13,027 --> 00:36:17,537
+    actually stop it for now now before i move
+    
+    784
+    00:36:17,537 --> 00:36:19,887
+    forward let's stop for just a moment and
+    
+    785
+    00:36:19,887 --> 00:36:21,767
+    let's look back on what we've created here
+    
+    786
+    00:36:22,057 --> 00:36:24,357
+    we've created are already s database we've
+    
+    787
+    00:36:24,357 --> 00:36:26,337
+    properly configured security groups for
+    
+    788
+    00:36:26,337 --> 00:36:28,917
+    that database and we've also configured
+    
+    789
+    00:36:28,917 --> 00:36:31,377
+    our easy to instance am i which has our web
+    
+    790
+    00:36:31,377 --> 00:36:33,237
+    server and peace be application on them
+    
+    791
+    00:36:33,437 --> 00:36:35,117
+    and which can communicate with already
+    
+    792
+    00:36:35,117 --> 00:36:38,087
+    s instance, we've also just launched a low
+    
+    793
+    00:36:38,087 --> 00:36:40,357
+    balancer that will be able to send traffic
+    
+    794
+    00:36:40,357 --> 00:36:42,977
+    to those instances now we finished creating
+    
+    795
+    00:36:42,977 --> 00:36:45,987
+    d a my image so let's go ahead and launch it
+    
+    796
+    00:36:46,127 --> 00:36:48,907
+    into our auto scaling group so we're missing
+    
+    797
+    00:36:48,907 --> 00:36:50,737
+    is this auto skilling group which we have
+    
+    798
+    00:36:50,737 --> 00:36:53,577
+    to create let's do that now let's go to auto
+    
+    799
+    00:36:53,577 --> 00:37:05,457
+    scaling groups inside of this launch configuration
+    
+    800
+    00:37:05,587 --> 00:37:08,197
+    we're going to click on my am eyes and we're
+    
+    801
+    00:37:08,197 --> 00:37:10,347
+    going to select this one we're going to leave
+    
+    802
+    00:37:10,347 --> 00:37:12,787
+    it to teach to micro for this we're gonna
+    
+    803
+    00:37:12,787 --> 00:37:17,417
+    name this app auto scaling we do not want
+    
+    804
+    00:37:17,417 --> 00:37:19,287
+    to spot instances we're not going to mess
+    
+    805
+    00:37:19,287 --> 00:37:21,437
+    with i am roles although we know exactly
+    
+    806
+    00:37:21,437 --> 00:37:23,677
+    what to do with those and how they work we
+    
+    807
+    00:37:23,677 --> 00:37:25,787
+    could also look at advanced details if we
+    
+    808
+    00:37:25,787 --> 00:37:28,087
+    wanted to i'm not going to change any of this
+    
+    809
+    00:37:28,637 --> 00:37:31,497
+    will leave the default storage when it comes
+    
+    810
+    00:37:31,497 --> 00:37:33,657
+    to the security group however, since we're
+    
+    811
+    00:37:33,657 --> 00:37:37,007
+    going to use this tow launch instances we
+    
+    812
+    00:37:37,007 --> 00:37:39,807
+    can use an existing easy to group in fact
+    
+    813
+    00:37:39,807 --> 00:37:41,687
+    we can use the two groups that we've been
+    
+    814
+    00:37:41,687 --> 00:37:44,937
+    using all along which is the ap easy to security
+    
+    815
+    00:37:44,937 --> 00:37:48,827
+    group that allows both hdp and sshh traffic
+    
+    816
+    00:37:49,027 --> 00:37:51,307
+    from all sources again we could make this
+    
+    817
+    00:37:51,307 --> 00:37:52,837
+    a little bit more restrictive if we wanted
+    
+    818
+    00:37:52,837 --> 00:37:55,937
+    to but let's select this one and then let's
+    
+    819
+    00:37:55,937 --> 00:37:58,977
+    go to review oh and actually before i move
+    
+    820
+    00:37:58,977 --> 00:38:02,087
+    forward if you're not using the same security
+    
+    821
+    00:38:02,087 --> 00:38:04,477
+    group that i'm using or that you created
+    
+    822
+    00:38:04,477 --> 00:38:06,597
+    with me you have to be very careful that you're
+    
+    823
+    00:38:06,597 --> 00:38:09,517
+    using a security group that is attached
+    
+    824
+    00:38:09,547 --> 00:38:12,817
+    to the right v p c i d if you're using a security
+    
+    825
+    00:38:12,817 --> 00:38:16,339
+    group that belongs to a different v c i d then
+    
+    826
+    00:38:16,349 --> 00:38:18,639
+    it won't work it won't be ableto launch in
+    
+    827
+    00:38:18,639 --> 00:38:20,369
+    that network because it's a completely
+    
+    828
+    00:38:20,369 --> 00:38:22,649
+    separate network so make sure you keep that
+    
+    829
+    00:38:22,649 --> 00:38:27,059
+    in mind ok let's go ahead and create launch
+    
+    830
+    00:38:27,059 --> 00:38:30,789
+    and configure we can use the v p c p m keep air
+    
+    831
+    00:38:30,789 --> 00:38:33,649
+    we've been using and we can launch this configuration
+    
+    832
+    00:38:34,069 --> 00:38:36,329
+    once i do that i can create an auto scaling
+    
+    833
+    00:38:36,329 --> 00:38:39,539
+    group and i'll use the same group name for
+    
+    834
+    00:38:39,539 --> 00:38:42,439
+    our launch configuration i want to do two
+    
+    835
+    00:38:42,439 --> 00:38:45,339
+    instances inside of our application vpc
+    
+    836
+    00:38:45,509 --> 00:38:47,879
+    and then for the sub net i'm going to choose
+    
+    837
+    00:38:47,889 --> 00:38:51,649
+    the private submits both of them so we don't
+    
+    838
+    00:38:51,649 --> 00:38:54,359
+    have to manage this anymore auto scaling
+    
+    839
+    00:38:54,359 --> 00:38:56,549
+    will do it for us since we put two sub nets
+    
+    840
+    00:38:56,679 --> 00:38:58,999
+    it will keep count of how many instances
+    
+    841
+    00:38:58,999 --> 00:39:01,619
+    are in each sub net and will accordingly
+    
+    842
+    00:00:00,000 --> 00:39:03,909
+    , auto scale up and down, we have a warning
+    
+    843
+    00:39:03,909 --> 00:39:06,149
+    that we're not gonna have any public i p addresses
+    
+    844
+    00:39:06,199 --> 00:39:08,499
+    attached to these instances, which is perfectly
+    
+    845
+    00:39:08,499 --> 00:39:10,079
+    fine that's what we want, then we could click
+    
+    846
+    00:39:10,079 --> 00:39:12,489
+    on advanced details, and we want to make
+    
+    847
+    00:39:12,489 --> 00:39:15,269
+    sure that we can receive traffic from elastic
+    
+    848
+    00:39:15,269 --> 00:39:17,129
+    low balancers, and of course we're going
+    
+    849
+    00:39:17,129 --> 00:39:19,429
+    to select our load bouncer that we created
+    
+    850
+    00:00:00,000 --> 00:39:21,529
+    , we're going to stick to the e l b health check
+    
+    851
+    00:39:21,529 --> 00:00:00,000
+    type, which we've configured already,
+    
+    852
+    00:39:23,879 --> 00:39:25,909
+    and we can leave this at the three hundred
+    
+    853
+    00:39:25,909 --> 00:39:28,849
+    defaults value of health check grief, period
+    
+    854
+    00:00:00,000 --> 00:39:31,069
+    , and we're not going to change anything
+    
+    855
+    00:39:31,069 --> 00:39:33,919
+    else, so let's hit next now, of course, were
+    
+    856
+    00:39:33,919 --> 00:39:36,179
+    using auto scaling toe scale up and down
+    
+    857
+    00:00:00,000 --> 00:39:38,049
+    , depending on traffic and that sort of thing
+    
+    858
+    00:00:00,000 --> 00:39:40,279
+    . So let's, take a look at some of those settings
+    
+    859
+    00:39:40,279 --> 00:39:42,459
+    that we can configure here, so i want to scale
+    
+    860
+    00:39:42,459 --> 00:39:45,609
+    between two and four instances, so if we
+    
+    861
+    00:39:45,609 --> 00:39:47,329
+    start getting more traffic, we have the
+    
+    862
+    00:39:47,329 --> 00:39:50,159
+    ability to scale up to four instances, which
+    
+    863
+    00:39:50,159 --> 00:39:52,529
+    will give us a lot more breathing room. I'm
+    
+    864
+    00:39:52,529 --> 00:39:54,629
+    not going to change the name, i am going to
+    
+    865
+    00:39:54,629 --> 00:39:58,199
+    execute the policy with a new alarm now i'm
+    
+    866
+    00:39:58,199 --> 00:40:00,359
+    not going to send any notifications, but
+    
+    867
+    00:40:00,359 --> 00:40:02,669
+    what i can do here is i can actually say that
+    
+    868
+    00:40:02,669 --> 00:40:06,199
+    whenever the average cpu utilization for
+    
+    869
+    00:40:06,199 --> 00:40:09,439
+    an instance is greater than or equal to sixty
+    
+    870
+    00:40:09,439 --> 00:40:12,959
+    percent for at least one consecutive period
+    
+    871
+    00:40:13,139 --> 00:40:16,620
+    of five minutes or actually let's do one
+    
+    872
+    00:40:16,620 --> 00:40:19,080
+    minute we want to create this alarm so every
+    
+    873
+    00:40:19,080 --> 00:40:22,000
+    time that an instance hits an average of
+    
+    874
+    00:40:22,010 --> 00:40:24,610
+    sixty percent utilization type or greater
+    
+    875
+    00:40:24,750 --> 00:40:28,130
+    for at least one minute we want this to trigger
+    
+    876
+    00:40:28,790 --> 00:40:32,300
+    and we want to take action to add one instance
+    
+    877
+    00:40:32,900 --> 00:40:35,850
+    and we could also add a warmup greece period
+    
+    878
+    00:40:35,980 --> 00:40:37,730
+    but i'm not going to do that for this example
+    
+    879
+    00:40:37,930 --> 00:40:40,340
+    now if we want to decrease the size say we
+    
+    880
+    00:40:40,340 --> 00:40:43,360
+    hit more than sixty percent cpu utilization
+    
+    881
+    00:40:43,490 --> 00:40:46,140
+    for one minute but then it comes down we want
+    
+    882
+    00:40:46,140 --> 00:40:49,220
+    to decrease the size back down to two or three
+    
+    883
+    00:40:49,330 --> 00:40:51,150
+    depending on the load that's remaining
+    
+    884
+    00:40:51,370 --> 00:40:53,320
+    so we can create a new alarm for the decrease
+    
+    885
+    00:40:53,320 --> 00:40:56,740
+    group average civilization of less than
+    
+    886
+    00:40:56,740 --> 00:41:00,970
+    or equal to maybe forty five percent for
+    
+    887
+    00:41:00,970 --> 00:41:05,770
+    at least one minute then we want this to take
+    
+    888
+    00:41:05,770 --> 00:41:08,610
+    action and we want to remove one instance
+    
+    889
+    00:41:08,740 --> 00:41:12,630
+    from our instance pool ok? So now let's configure
+    
+    890
+    00:41:12,630 --> 00:41:14,590
+    notifications and we're not going to add
+    
+    891
+    00:41:14,590 --> 00:41:17,120
+    any configurations or tags we've got everything
+    
+    892
+    00:41:17,120 --> 00:41:19,190
+    good to go we can create our auto scaling
+    
+    893
+    00:41:19,190 --> 00:41:24,610
+    group okay, so now that this has created
+    
+    894
+    00:00:00,000 --> 00:41:25,860
+    , we're going to have to wait just a little
+    
+    895
+    00:41:25,860 --> 00:41:29,050
+    bit of time for it to create two instances
+    
+    896
+    00:41:29,060 --> 00:41:31,410
+    since that's our minimum and we can also
+    
+    897
+    00:41:31,410 --> 00:41:34,120
+    refer back to our activity history to see
+    
+    898
+    00:41:34,120 --> 00:41:35,960
+    what it says and it we can see here it says
+    
+    899
+    00:41:35,960 --> 00:41:37,670
+    not yet in service so we're going to have
+    
+    900
+    00:41:37,670 --> 00:41:39,570
+    to wait for this to finish and we can keep
+    
+    901
+    00:41:39,570 --> 00:41:42,560
+    refreshing until it is done until we see
+    
+    902
+    00:41:42,570 --> 00:41:45,390
+    two instances running so i just refreshed
+    
+    903
+    00:41:45,390 --> 00:41:47,060
+    here and we already have one successful
+    
+    904
+    00:41:47,290 --> 00:41:51,510
+    and if i click on instances here we do see
+    
+    905
+    00:41:51,510 --> 00:41:53,980
+    that we have two instances currently running
+    
+    906
+    00:41:54,600 --> 00:41:57,490
+    and initializing and we can also notice
+    
+    907
+    00:41:57,490 --> 00:41:59,390
+    that they're both in different availability
+    
+    908
+    00:41:59,390 --> 00:42:01,640
+    zones we have one in availability zone to
+    
+    909
+    00:42:01,640 --> 00:42:05,710
+    a and the other one in two b so it is creating
+    
+    910
+    00:42:05,710 --> 00:42:08,110
+    both of these in different availability
+    
+    911
+    00:42:08,110 --> 00:42:10,400
+    zones which is exactly what we wanted so
+    
+    912
+    00:42:10,400 --> 00:42:12,730
+    this is properly configured something
+    
+    913
+    00:42:12,730 --> 00:42:14,940
+    else i want you to notice is that if we scroll
+    
+    914
+    00:42:14,940 --> 00:42:17,040
+    down to the information about the instance
+    
+    915
+    00:42:17,040 --> 00:42:19,340
+    itself and let's make this a little bit bigger
+    
+    916
+    00:42:19,790 --> 00:42:22,220
+    you'll notice that it has a private i p but
+    
+    917
+    00:42:22,220 --> 00:42:25,710
+    no public or elastic aip and if we go to the
+    
+    918
+    00:42:25,710 --> 00:42:28,340
+    other instance as well we have the same thing
+    
+    919
+    00:42:28,340 --> 00:42:31,890
+    no public hype so this is indeed inside of
+    
+    920
+    00:42:31,890 --> 00:42:34,000
+    our private sudden it and it doesn't have
+    
+    921
+    00:42:34,080 --> 00:42:38,070
+    any way of being reached via the open internet
+    
+    922
+    00:42:38,070 --> 00:42:40,390
+    so if i try to connect to these from my local
+    
+    923
+    00:42:40,390 --> 00:42:42,990
+    computer i won't have access i will need
+    
+    924
+    00:42:42,990 --> 00:42:44,880
+    to connect to something in the public submit
+    
+    925
+    00:42:45,060 --> 00:42:48,080
+    in order to access them this includes sssh
+    
+    926
+    00:00:00,000 --> 00:42:50,750
+    . Unless you set up something like open vpn
+    
+    927
+    00:42:50,770 --> 00:42:54,020
+    or some kind of vpn. If we go over to our low
+    
+    928
+    00:42:54,020 --> 00:42:56,860
+    bouncer, remember how we had to set it up
+    
+    929
+    00:42:56,860 --> 00:42:58,830
+    with the public, some nets? Well, if we go
+    
+    930
+    00:42:58,830 --> 00:43:03,170
+    to instances, then we still see the two public
+    
+    931
+    00:43:03,180 --> 00:43:05,940
+    availability zones as being attached to
+    
+    932
+    00:43:05,940 --> 00:43:08,630
+    it. And they both have one instance count
+    
+    933
+    00:00:00,000 --> 00:43:12,050
+    . But the instances are not inside of the
+    
+    934
+    00:43:12,050 --> 00:43:14,180
+    public, something there inside of the private
+    
+    935
+    00:43:14,180 --> 00:00:00,000
+    submit so it is mapping it accordingly.
+    
+    936
+    00:43:17,200 --> 00:43:19,970
+    Now, if i go to the description itself and
+    
+    937
+    00:43:19,970 --> 00:43:22,790
+    grabbed the d n s name, copy and paste in my
+    
+    938
+    00:43:22,790 --> 00:00:00,000
+    browser, it will load our application.
+    
+    939
+    00:43:25,360 --> 00:43:27,720
+    As you can see here we have level five, which
+    
+    940
+    00:43:27,720 --> 00:43:30,630
+    is the default page that we set up on our instance
+    
+    941
+    00:00:00,000 --> 00:43:33,960
+    , and as we refresh it will distribute the
+    
+    942
+    00:43:33,960 --> 00:43:36,310
+    load or as we get more requests and we'll
+    
+    943
+    00:43:36,310 --> 00:43:38,940
+    distribute the load between those two instances
+    
+    944
+    00:00:00,000 --> 00:43:42,020
+    . And since we are setting it up in a auto scaling
+    
+    945
+    00:43:42,020 --> 00:43:44,190
+    environment, what i can do is i can delete
+    
+    946
+    00:43:44,190 --> 00:43:47,270
+    one of these air stop one of these, ritter
+    
+    947
+    00:43:47,270 --> 00:43:51,470
+    min ate it, and within a matter of time, the
+    
+    948
+    00:43:51,470 --> 00:43:54,530
+    auto scaling group will spin up a new instance
+    
+    949
+    00:43:54,540 --> 00:43:56,910
+    to take over, and i'll show you that in just
+    
+    950
+    00:43:56,910 --> 00:43:59,730
+    a minute as it spins up the new one. So i just
+    
+    951
+    00:43:59,730 --> 00:44:01,360
+    refreshed here and we see that we haven't
+    
+    952
+    00:44:01,360 --> 00:44:03,970
+    instance initializing as the other one
+    
+    953
+    00:44:03,970 --> 00:44:06,590
+    was being terminated as soon as that happens
+    
+    954
+    00:44:06,640 --> 00:44:09,250
+    we can go to the load balancer and it will
+    
+    955
+    00:44:09,350 --> 00:44:12,180
+    add it to its list of instances which can
+    
+    956
+    00:44:12,180 --> 00:44:14,808
+    have and receive traffic in fact let's check
+    
+    957
+    00:44:14,808 --> 00:44:18,518
+    seventy nine a and b sixty seven nine a b six
+    
+    958
+    00:44:18,528 --> 00:44:22,638
+    e b sixty this is the one right here this one
+    
+    959
+    00:44:22,638 --> 00:44:24,808
+    was taken out of the pool because it can no
+    
+    960
+    00:44:24,808 --> 00:44:27,298
+    longer receive traffic thanks to everything
+    
+    961
+    00:44:27,298 --> 00:44:30,058
+    being automated this was a long lesson and
+    
+    962
+    00:44:30,058 --> 00:44:33,108
+    we accomplished a lot it may be a good idea
+    
+    963
+    00:44:33,108 --> 00:44:35,028
+    to go back through it and take really good
+    
+    964
+    00:44:35,028 --> 00:44:37,908
+    notes of each step to make sure that you understand
+    
+    965
+    00:44:37,918 --> 00:44:40,118
+    every single step of the way but what we've
+    
+    966
+    00:44:40,118 --> 00:44:42,488
+    done here is we've built a complete application
+    
+    967
+    00:44:42,668 --> 00:44:45,048
+    and highly available and fault tolerant
+    
+    968
+    00:44:45,048 --> 00:44:47,428
+    environment we're using an elastic low
+    
+    969
+    00:44:47,428 --> 00:44:50,548
+    balancer on amazon am i with a web server
+    
+    970
+    00:44:50,728 --> 00:44:54,448
+    ap hp processor engine a peach peeler vilification
+    
+    971
+    00:44:54,698 --> 00:44:57,838
+    and we also set up on our d s database and we
+    
+    972
+    00:44:57,838 --> 00:44:59,878
+    connected it to our application on top of
+    
+    973
+    00:44:59,878 --> 00:45:02,258
+    that we have also scaling which will self
+    
+    974
+    00:45:02,258 --> 00:45:05,108
+    heal our application and grow it in order
+    
+    975
+    00:45:05,108 --> 00:45:07,308
+    to meet demand. We could take this even a
+    
+    976
+    00:45:07,308 --> 00:45:09,478
+    step further by setting up accustomed to
+    
+    977
+    00:45:09,478 --> 00:45:11,428
+    main aim in route fifty three if we wanted
+    
+    978
+    00:45:11,428 --> 00:45:13,948
+    to and we'd have an application ready to
+    
+    979
+    00:45:13,948 --> 00:45:16,168
+    serve the legitimate traffic fantastic
+    
+    980
+    00:45:16,168 --> 00:45:18,148
+    job. Completing this lesson. You may now
+    
+    981
+    00:45:18,148 --> 00:00:00,000
+    move on.
+    
