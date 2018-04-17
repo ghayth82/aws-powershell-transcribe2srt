@@ -8,7 +8,7 @@ $awsparams = @{
 
 $prefix = 'https://s3-eu-west-1.amazonaws.com'
 $bucketname = 'tim-training-thing'
-$file = 'videoplayback.mp4'
+$file = "$PSScriptRoot/videoplayback.mp4"
 $s3uri = "$prefix/$bucketname/$file" 
 $jobname = "newjob"
 
@@ -111,4 +111,4 @@ $subtitle
 }
     
 #Now output the results to our .srt file
-$srtinfo | Set-Content '~/Downloads/subs.srt' -Force
+$srtinfo | Set-Content "$PSScriptRoot/subs.srt" -Force
