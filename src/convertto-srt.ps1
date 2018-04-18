@@ -9,35 +9,26 @@ $awsparams = @{
 $prefix = 'https://s3-eu-west-1.amazonaws.com'
 $bucketname = 'tim-training-thing'
 $file = "$PSScriptRoot/videoplayback.mp4"
-$s3uri = "$prefix/$bucketname/$file" 
-$jobname = "newjob"
+$s3uri = "$prefix/$bucketname/videoplayback.mp4" 
+$jobname = "newjob_marvin5"
 
 Write-S3Object -BucketName $bucketname -File $file @awsparams
 
 #We don't need to demux the audio stream from an MP4 file. Nice for most video downloads. :)
 Start-TRSTranscriptionJob -Media_MediaFileUri $s3uri -TranscriptionJobName $jobname -MediaFormat mp4 -LanguageCode en-US @awsparams 
 
-<#
-CompletionTime         : 04/17/2018 09:35:40
-CreationTime           : 04/17/2018 09:29:33
-FailureReason          : 
-LanguageCode           : en-US
-TranscriptionJobName   : subtitle-adamz
-TranscriptionJobStatus : COMPLETED
-#>
-
 #Job processing will run async, so it's up to you how you deal with this.
-$results = Get-TRSTranscriptionJob -TranscriptionJobName subtitle-adamz @awsparams 
+$results = Get-TRSTranscriptionJob -TranscriptionJobName $jobname @awsparams 
 
 While ($results.TranscriptionJobStatus -eq 'IN_PROGRESS') {
     Start-Sleep -Seconds 10
-    $results = Get-TRSTranscriptionJob -TranscriptionJobName subtitle-adamz @awsparams 
+    $results = Get-TRSTranscriptionJob -TranscriptionJobName $jobname @awsparams 
 }
 
 If ($results.TranscriptionJobStatus -eq 'FAILED') {[Environment]::Exit(1)}
 $transcripturi = $results.Transcript.TranscriptFileUri 
-Invoke-Webrequest -Uri $transcripturi -OutFile result.json 
-$transcription = Get-Content result.json | ConvertFrom-Json
+Invoke-Webrequest -Uri $transcripturi -OutFile '../output/result.json'
+$transcription = Get-Content '../output/result.json' | ConvertFrom-Json
 $transcription = $transcription[0].results.items
 
 #Now for some horrible code to make the SRT that i really need to tidy up later!
@@ -46,6 +37,7 @@ $transcription = $transcription[0].results.items
 $index = 0
 $sequenceno = 0
 $srtinfo = ""
+$subtitle = ""
 
 #Repeat this process until we have reached the end of the results
 While ($index -lt $transcription.count) {
@@ -111,4 +103,4 @@ $subtitle
 }
     
 #Now output the results to our .srt file
-$srtinfo | Set-Content "$PSScriptRoot/subs.srt" -Force
+$srtinfo | Set-Content "../output/subs.srt" -Force
