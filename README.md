@@ -53,7 +53,7 @@ If this is the first run during the current PowerShell session, execute all of t
 
 If not, then all you need to do is change the appropriate variable(s)
 
-####Define the Parameters for the AWS Cmdlets
+#### Define the Parameters for the AWS Cmdlets
 
 ```
 $awsparams = @{
@@ -62,13 +62,13 @@ $awsparams = @{
 }
 ```
 
-####Specify your S3 bucket
+#### Specify your S3 bucket
 
 ```
 $bucket = 'tim-training-thing'
 ```
 
-####Specify the Location of the Video (mp4) File
+#### Specify the Location of the Video (mp4) File
 
 ```
 $path = "~/Desktop/videoplayback.mp4"
@@ -101,9 +101,9 @@ The end time entry for the last sequence in the SRT file is always wrong.
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at <https://github.com/tim-pringle/aws-transcribe2srt>.
-##Additional Information
-18/04/2018 : Developed on OSX 10.13.3 with PowerShell v6.0.2 release
 
+## Additional Information
+18/04/2018 : Developed on OSX 10.13.3 with PowerShell v6.0.2 release
 
 ## License
 
