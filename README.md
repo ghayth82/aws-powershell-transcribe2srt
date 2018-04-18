@@ -28,15 +28,17 @@ Launch PowerShell Core
 ➜  ~  pwsh
 ```
 
-### Initialization
-The following steps only need to be carried out **once** per PowerShell session. It won't hurt if you do, but the only benefit will be a couple of extra seconds convincing your boss that you're busy with work.
-
-
 Change to the *src* directory of the cloned repo
 
 ```
-set-location ~/git/aws-transcribe2srt/src/                                                                                                                                                                                                                                 
+set-location ~/git/aws-transcribe2srt/src/                                                                                                                                                                                                                                
 ```
+
+### Initialization
+**NOTE: The following steps are covered in the *sample.ps1* file that is also in the *src* folder. **
+
+The actions below only need to be carried out **once** per PowerShell session. It won't hurt if you do them more than once, but the only benefit will be a couple of extra seconds convincing your boss that you're busy with work.
+
 
 Import the required modules and dotsource the functions
 
@@ -66,7 +68,7 @@ $awsparams = @{
 $bucket = 'tim-training-thing'
 ```
 
-####Specify the location of the video (mpp4) file
+####Specify the Location of the Video (mp4) File
 
 ```
 $path = "~/Desktop/videoplayback.mp4"
@@ -78,7 +80,7 @@ $path = "~/Desktop/videoplayback.mp4"
 $destinationPath = '~/Desktop/videoplayback.srt'
 ```
 
-### Transcribe the MP4 File
+### Transcribe the mp4 File
 We just need to assign a variable to the result of the *Get-AWSTranscription* cmdlet
 
 ```
@@ -93,6 +95,7 @@ ConvertTo-Srt -Transcription $transcription -DestinationPath $destinationPath
 ```
 ### Comments
 You can find a sample script, *sample.ps1* which performs the above, in the *src* folder.
+
 ## Known Issues
 The end time entry for the last sequence in the SRT file is always wrong.
 
