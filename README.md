@@ -29,7 +29,7 @@ Launch PowerShell Core
 ```
 
 ### Initialization
-The following steps only need to be carried out **once** per PowerShell session
+The following steps only need to be carried out **once** per PowerShell session. It won't hurt if you do, but the only benefit will be a couple of extra seconds convincing your boss that you're busy with work.
 
 
 Change to the *src* directory of the cloned repo
@@ -72,6 +72,12 @@ $bucket = 'tim-training-thing'
 $path = "~/Desktop/videoplayback.mp4"
 ```
 
+#### Specify the Name of the SRT File to be Created
+
+```
+$destinationPath = '~/Desktop/videoplayback.srt'
+```
+
 ### Transcribe the MP4 File
 We just need to assign a variable to the result of the *Get-AWSTranscription* cmdlet
 
@@ -83,9 +89,10 @@ $transcription = Get-AWSTranscription -AWSDefaultParameters $awsparams -Bucket $
 The results of the transcript are fed into the ConvertTo-Srt cmdlet, which handles the processing of the data and creating the SRT file from it.
 
 ```
-ConvertTo-Srt -Transcription $transcription -DestinationPath '~/Desktop/videoplayback.srt'
+ConvertTo-Srt -Transcription $transcription -DestinationPath $destinationPath
 ```
-
+### Comments
+You can find a sample script, *sample.ps1* which performs the above, in the *src* folder.
 ## Known Issues
 The end time entry for the last sequence in the SRT file is always wrong.
 

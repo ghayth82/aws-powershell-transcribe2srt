@@ -10,8 +10,9 @@ $awsparams = @{
 
 $bucket = 'tim-training-thing'
 $path = "~/Desktop/videoplayback.mp4"
+$destinationPath = '~/Desktop/videoplayback.srt'
 
 #Initialise a variable that will be used to store the transcription results.
 #Use a reference variable so we don't need to worry about any spurious output within the function
 $transcription = Get-AWSTranscription -AWSDefaultParameters $awsparams -Bucket $bucket -Path $path
-ConvertTo-Srt -Transcription $transcription -DestinationPath '~/Desktop/videoplayback.srt'
+ConvertTo-Srt -Transcription $transcription -DestinationPath $destinationPath
