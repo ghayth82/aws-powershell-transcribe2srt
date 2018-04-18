@@ -11,7 +11,9 @@ Function ConvertTo-Srt {
        
     Process {      
 
+        [System.Object] $Transcription = $Transcription | ConvertFrom-Json
         $Transcription = $Transcription[0].results.items
+
         #Now for some horrible code to make the SRT that i really need to tidy up later!
 
         #Set initial variables
@@ -82,9 +84,8 @@ $subtitle
             $srtinfo += $subdetail
     
         }
-    
+
         #Now output the results to our .srt file
         $srtinfo | Set-Content $DestinationPath -Force
-
     }
 }
