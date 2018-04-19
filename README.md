@@ -102,8 +102,9 @@ The end time entry for the last sequence in the SRT file is always wrong.
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at <https://github.com/tim-pringle/aws-transcribe2srt>.
 
-## Additional Information
+## History
 18/04/2018 : Developed on OSX 10.13.3 with PowerShell v6.0.2 release
+19/04/2018 : Renamed repository 
 
 ## License
 
