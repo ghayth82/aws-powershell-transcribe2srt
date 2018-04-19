@@ -100,7 +100,7 @@ You can find a sample script, *sample.ps1* which performs the above, in the *src
 The end time entry for the last sequence in the SRT file is always wrong.
 
 ## Contributing
-Bug reports and pull requests are welcome on GitHub at <https://github.com/tim-pringle/aws-transcribe2srt>.
+Bug reports and pull requests are welcome on GitHub at <https://github.com/tim-pringle/aws-powershell-transcribe2srt>.
 
 ## History
 18/04/2018 : Developed on OSX 10.13.3 with PowerShell v6.0.2 release
