@@ -11,20 +11,19 @@ Function Get-AWSTranscription {
     
        
     Process {         
-
-        #Set the S3 uri prefix and create a unique guid to be used as the job name
-        $prefix = 'https://s3-eu-west-1.amazonaws.com'
-        $jobname = [Guid]::NewGuid() | Select-Object -ExpandProperty Guid
-        $resultsfile = './result.json'
-
         #Let's get the file item so we can use some of its properties
         $fileitem = Get-Item -Path $Path
+
+        #Set the S3 uri prefix and uri for the S3 object's key
+        $prefix = 'https://s3-eu-west-1.amazonaws.com'
         $s3uri = "$prefix/$Bucket/$($fileitem.name)" 
 
         #Upload it to S3
         Write-S3Object -BucketName $Bucket -File $Path @AWSDefaultParameters
 
-        #We don't need to demux the audio stream from an MP4 file. Nice for most video downloads. :)
+        #Define a unique guid to be used as the job name and the output results file.
+        $jobname = [Guid]::NewGuid() | Select-Object -ExpandProperty Guid
+        $resultsfile = './result.json'
         $null = Start-TRSTranscriptionJob -Media_MediaFileUri $s3uri -TranscriptionJobName $jobname -MediaFormat mp4 -LanguageCode en-US @AWSDefaultParameters
 
         #Job processing will run async, so it's up to you how you deal with this.

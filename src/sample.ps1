@@ -1,4 +1,11 @@
 Import-Module AWSPowerShell.NetCore
+
+#Change this location as required for the location of the
+#src folder of the repo
+
+Set-Location -Path "~/git/aws-powershell-transcribe2srt/src"
+
+#Dot source the two functions
 . ./ConvertTo-Srt.ps1
 . ./Get-AWSTranscription.ps1
 
@@ -8,6 +15,7 @@ $awsparams = @{
     region      = 'eu-west-1' 
 }
 
+#Set parameters as required
 $bucket = 'tim-training-thing'
 $path = "~/Desktop/videoplayback.mp4"
 $destinationPath = '~/Desktop/videoplayback.srt'
