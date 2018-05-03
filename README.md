@@ -1,5 +1,6 @@
 # aws-powershell-transcribe2srt - A Media File to SRT Converter
 This projects demonstrates the use of the AWS Transcribe service and PowerShell to create an SRT (subtitle) file from a media file.
+You can find some posts on my blog at [powershell.amsterdam](http://www.powershell.amsterdam/2018/05/01/when-marvin-gaye-met-amazon-transcribe-powershell-automating-subtitle-creation-part-i/)
 
 Makes use of:
 
